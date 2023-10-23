@@ -1,0 +1,34 @@
+.container {
+    background-color: black;
+    color: #1ed760;
+    width: 100%;
+    height: 15vh;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    text-decoration: none;
+    color: #1ed760;
+    font-size: 1.7vw;
+}
+
+.headerList {
+    width: 85vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    list-style-type: none;
+    font-weight: bold;
+    font-size: 1.5vw;
+    font-family: sans-serif, "Monrope";
+    color:#1ed760;
+}

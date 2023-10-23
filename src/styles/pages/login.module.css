@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    /* background-color: black; */
+}
+
+.onSubmit {
+    display: flex;
+    justify-content: center;
+}
+
+.inputForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: .9em;
+    color: #1ed760
+}
+
+.input::placeholder {
+    color: #1ed760
+}
+
+.input {
+    margin-left: 1ex;
+    border: none;
+    border-block-end: 1px solid #535353;
+    writing-mode: horizontal-tb;
+    color: #1ed760;
+    /* background-color: black; */
+}
+
+.title {
+    color: #1ed760;
+    font-size:xx-large;
+}
+
+.buttonSubmit {
+    color: white;
+    background-color: #1ed760;
+    border: none;
+    border-radius: 10px;
+    width: 80px;
+    height: 25px;
+}
