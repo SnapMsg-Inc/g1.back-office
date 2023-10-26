@@ -7,8 +7,8 @@ export default function Header() {
     return (
         <div className={styles.container}>
             <a href="/" className={styles.logo}>
-                <img src={logo}/>
-                SnapMsg
+                <img src={logo}/> 
+                SnapMsg 
             </a>
             <ul className={styles.headerList}>
                 {sections.map((section) => {

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from '../styles/pages/login.module.css'
+import { AuthenticationContext } from "../auth/context/authenticationContext";
+import Spinner from "react-activity/dist/Spinner";
+import "react-activity/dist/Spinner.css";
+
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const { onLogin, isLoading } = useContext(AuthenticationContext)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -11,6 +16,7 @@ export default function Login() {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        onLogin(formData.email, formData.password)
         console.log(`email: ${formData.email} password: ${formData.password}`)
     }
 
@@ -40,9 +46,13 @@ export default function Login() {
                         autoComplete="name"
                     />
                 </div>
-                <div className={styles.onSubmit}>
-                    <button className={styles.buttonSubmit} type="submit">Sign In</button>
-                </div>
+                    <div className={styles.onSubmit}>
+                        {isLoading ? 
+                            <Spinner color="#1ed760" size={10} speed={1} animating={true} /> 
+                            :    
+                            <button className={styles.buttonSubmit} type="submit">Sign In</button>
+                        }
+                    </div>
             </form>
         </div>
     );
