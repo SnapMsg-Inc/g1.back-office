@@ -39,7 +39,7 @@ spec:
   ports:
   - protocol: TCP
     port: 8080
-    targetPort: http
+    targetPort: 8080
     name: http
   selector: # labels to match pods
     app.kubernetes.io/name: backoffice 
