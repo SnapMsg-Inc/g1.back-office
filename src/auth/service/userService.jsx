@@ -17,6 +17,7 @@ export const GetUser = (state) => {
             headers: {
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
+                'Access-Control-Allow-Origin': "*"
             }
         })
         .then((response) => {
