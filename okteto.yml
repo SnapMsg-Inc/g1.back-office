@@ -10,7 +10,7 @@ deploy:
 
 dev:
   backoffice:
-    command: npm run start
+ #   command: npm run start
     forward:
       - 8080:8080
       - 3000:api-gateway.marioax:3000

@@ -11,9 +11,8 @@ const getToken = () =>
 export const GetUser = (state) => {
     getToken().then((token) => {
         console.log(`Token: ${token}`)
-        axios({
-            method: 'get',
-            url: `${URL}/me`,
+        axios.get({
+            url: `${URL}/users/me`,
             headers: {
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
