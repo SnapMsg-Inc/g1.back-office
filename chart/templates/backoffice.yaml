@@ -23,7 +23,7 @@ spec:
         image: {{ .Values.backoffice.image }}
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 8080
           protocol: TCP
 		
 ---
@@ -38,7 +38,7 @@ spec:
   type: ClusterIP
   ports:
   - protocol: TCP
-    port: 80
+    port: 8080
     targetPort: http
     name: http
   selector: # labels to match pods
