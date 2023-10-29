@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    padding: 10px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.profileImage {
+    padding: 20px;
+}
+
+.profileImage img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    max-width: 100%;
+    align-self:center;
+}
+
+.profileInfo p{
+    margin: 0;
+    padding: 0;
+}
+
+.alias {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: bold;
+}

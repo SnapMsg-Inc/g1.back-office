@@ -3,6 +3,7 @@ import { SignInReducer } from "./signinReducer"
 import { LoginAccount, LogoutAccount } from "../authentication"
 import firebaseApp from "../firebase"
 import { getAuth } from "firebase/auth"
+import { useEffect } from "react"
 import { GetUser } from "../service/userService"
 
 export const AuthenticationContext = createContext()
@@ -16,25 +17,28 @@ export const AuthenticationContextProvider = ({children}) => {
     })
 
     const checkAuth = () => {
-        setIsLoading(true)
         getAuth(firebaseApp).onAuthStateChanged((userCredential) => {
             if (userCredential) {
                 console.log('creation: ', userCredential.metadata.creationTime)
                 console.log('sigintime: ', userCredential.metadata.lastSignInTime)
                 dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
-                setIsLoading(false)
             } else {
                 dispatchSignedIn({type:"SIGN_OUT"})
-                setIsLoading(false)
             }
         })
     }
+
+    useEffect(()=>{
+        checkAuth()
+    },[])
 
     const onLogin = (email, password) => {
         setIsLoading(true)
         setError(false)
         LoginAccount(email, password)
         .then((userCredential) => {
+            const {uid} = userCredential.user
+            console.log(uid)
             dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
             console.log('Inicie sesion')
             GetUser(setData)
@@ -59,7 +63,6 @@ export const AuthenticationContextProvider = ({children}) => {
                 isAuthenticated: signedIn.userToken !== null, 
                 isLoading,
                 error,
-                checkAuth,
                 onLogin,
                 onLogout,
             }}>

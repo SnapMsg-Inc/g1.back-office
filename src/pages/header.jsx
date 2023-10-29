@@ -1,20 +1,29 @@
 import styles from '../styles/pages/header.module.css'
 import ListButton from '../utils/listButton';
-import sections from '../utils/data/sections.json'
 import logo from '../logo.svg'
+import { useContext } from 'react';
+import { AuthenticationContext } from '../auth/context/authenticationContext';
+
+const login = {
+    "id": 1,
+    "name": "Sign In",
+    "path": "/sign-in"
+}
 
 export default function Header() {
+    const { isAuthenticated } = useContext(AuthenticationContext)
+
     return (
         <div className={styles.container}>
             <a href="/" className={styles.logo}>
-                <img src={logo}/> 
+                <img src={logo} alt='SnapMsg'/> 
                 SnapMsg 
             </a>
-            <ul className={styles.headerList}>
-                {sections.map((section) => {
-                    return <ListButton key={section.id} section={section} />;
-                })}
-            </ul>
+            { isAuthenticated ? null : 
+                <ul className={styles.headerList}>
+                    <ListButton key={login.id} section={login} />
+                </ul>
+            }
         </div>
     )
 } 

@@ -44,5 +44,6 @@
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
-  }
+  },
+  "proxy": "http://api-gateway.marioax:3000"
 }

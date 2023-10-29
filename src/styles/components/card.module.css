@@ -1,0 +1,59 @@
+/* .userCard {
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: .5%;
+    text-align: center;
+    margin: .5%;
+}
+
+.userCard img {
+    width: 80px;
+    height: 80px;
+    max-width: 80%;
+    border-radius: 50%;
+}
+*/
+
+
+.cardsItem {
+    display: flex;
+    padding: 1rem;
+    text-align: center;
+    @media(min-width: 40rem) {
+        width: 100%;
+    }
+    @media(min-width: 56rem) {
+        width: 80%;
+    }
+}
+
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 5%;
+}
+
+.cardImage {
+    filter: contrast(70%);
+    justify-content: center;
+    align-items: center;
+}
+
+.cardImage img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.profile {
+    background-color: #1ed760;
+    color: white;
+    width: 70%;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+} 

@@ -1,47 +1,72 @@
 .container {
+    background-image: url('https://media.product.which.co.uk/prod/images/1500_750/gm-bf924f18-377d-4517-bcd7-2b4e040bedd7-mobile-phone-providers.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 85vh;
     display: flex;
-    flex-direction: column;
-    align-content: center;
     align-items: center;
-    /* background-color: black; */
+    align-content: center;
+    justify-content: left;
+    padding-left: 5%;
 }
 
-.onSubmit {
+.title {
+    color: #1ed760;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.containerForm {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 1.5% 1%;
+    border-radius: 20%;
+}
+
+.containerForm form{
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 
 .inputForm {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: .9em;
-    color: #1ed760
+    font-size: 20px;
+    color: #1ed760;
+    height: 20%;
+    width: 100%;
+    margin: 3% 0;
+} 
+
+.input {
+    border: none;
+    border-block-end: 1px solid #535353;
+    writing-mode: horizontal-tb;
+    color: #1ed760;
 }
 
 .input::placeholder {
     color: #1ed760
 }
 
-.input {
-    margin-left: 1ex;
-    border: none;
-    border-block-end: 1px solid #535353;
-    writing-mode: horizontal-tb;
-    color: #1ed760;
-    /* background-color: black; */
-}
-
-.title {
-    color: #1ed760;
-    font-size:xx-large;
+.onSubmit {
+    align-self: center;
+    padding-top: 20px;
 }
 
 .buttonSubmit {
+    width: 80px;
+    height: 25px;
     color: white;
     background-color: #1ed760;
     border: none;
     border-radius: 10px;
-    width: 80px;
-    height: 25px;
 }

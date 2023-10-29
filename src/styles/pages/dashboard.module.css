@@ -1,0 +1,83 @@
+.container {
+    height: 85vh;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #e4e4e4;
+}
+
+.perfil {
+    height: 85vh;
+    width: 20%;
+    background-color: white;
+}
+
+.section {
+    height: 85vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #e4e4e4;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1ed760;
+    padding: .5%;
+}
+
+.searchBar {
+    padding: .5%;
+}
+
+.cardContainer {
+    max-height: 26.5rem;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+    gap: 2%;
+    padding-right: 1%;
+    padding: 0;
+    margin: 0;
+}
+
+/* .userCardContainer {
+    padding: .5%;
+    overflow: hidden;
+    max-width: 400px;
+}
+
+.scrollContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}  */
+
+/* display: grid;
+grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+gap: 2%;
+overflow-y: auto;
+padding-right: 1%; */
+
+/*
+.scrollContainer::-webkit-scrollbar {
+    width: 15px;
+}
+
+.scrollContainer::-webkit-scrollbar-track {
+    background: #e4e4e4;        
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+    background-color: #1ed760;    
+    border-radius: 20px;       
+    border: 1px solid #1ed760
+}
+*/
