@@ -4,12 +4,16 @@ import { AuthenticationContext } from "../auth/context/authenticationContext";
 import Spinner from "react-activity/dist/Spinner";
 import "react-activity/dist/Spinner.css";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { onLogin, isLoading, isAuthenticated } = useContext(AuthenticationContext)
+    const [isVisible, setIsVisible] = useState(false)
     const navigate = useNavigate()
     
+    const handleViewPassword = () => setIsVisible(!isVisible)
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -31,9 +35,9 @@ export default function Login() {
         <div className={styles.container}>
             <div className={styles.containerForm}>
                 <div className={styles.title}>
-                    Sign In
+                    Welcome Back!!
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.inputForm}>
                         <input
                             className={styles.input}
@@ -44,26 +48,41 @@ export default function Login() {
                             onChange={handleChange}
                             autoComplete="name"
                         />
+                        <Icon icon="material-symbols:mail" />
                     </div>
                     <div className={styles.inputForm}>
                         <input
                             className={styles.input}
-                            type="password"
+                            type={isVisible ? "text" : "password"}
                             name="password"
                             placeholder="Password"
                             value={formData.password}
                             onChange={handleChange}
                             autoComplete="name"
                         />
+                        <Icon icon={isVisible ? "mdi:eye" : "mdi:eye-off"} onClick={handleViewPassword}/>
                     </div>
-                    <div className={styles.onSubmit}>
+                    <div className={styles.forgotPassword}>
+                        Forgot your password?
+                    </div>
+                    <div className={isLoading ? styles.spinner : styles.onSubmit}>
                         {isLoading ? 
                             <Spinner color="#1ed760" size={10} speed={1} animating={true} /> 
                             :    
-                            <button className={styles.buttonSubmit} type="submit">Sign In</button>
+                            <button 
+                                className={styles.buttonSubmit} 
+                                type="submit">
+                                Sign In
+                            </button>
                         }
                     </div>
                 </form>
+                <div className={styles.federate}>
+                    <Icon icon="ri:google-fill" />
+                    <button>
+                        Sign in with Google
+                    </button>
+                </div>
             </div>
         </div>
     );

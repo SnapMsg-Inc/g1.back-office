@@ -15,8 +15,8 @@ export default function Header() {
 
     return (
         <div className={styles.container}>
-            <a href="/" className={styles.logo}>
-                <img src={logo} alt='SnapMsg'/> 
+            <a href={isAuthenticated ? "#" : "/"} className={styles.logo}>
+                <img src={logo} alt='SnapMsg'/>
                 SnapMsg 
             </a>
             { isAuthenticated ? null : 

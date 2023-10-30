@@ -15,7 +15,8 @@
     justify-content: left;
     text-decoration: none;
     color: #1ed760;
-    font-size: 1.7vw;
+    font-size: .9rem;
+    padding-left: 2%;
 }
 
 .headerList {
@@ -29,4 +30,5 @@
     font-size: 1.5vw;
     font-family: sans-serif, "Monrope";
     color:#1ed760;
+    padding-right: 2%;
 }

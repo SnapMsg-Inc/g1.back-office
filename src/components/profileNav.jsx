@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import styles from '../styles/components/profileNav.module.css'
 import { AuthenticationContext } from '../auth/context/authenticationContext'
+import { Icon } from '@iconify/react'
 
 const user = {
     "uid": "N4e4sJYhlmOQawJkwsXliQzoP8z1",
@@ -25,15 +26,26 @@ export default function ProfileNav() {
         <div className={styles.container}>
             <div className={styles.profile}>
                 <div className={styles.profileImage}>
-                    <img src={user.pic} alt={user.alias} sizes={20}/>
+                    <img src={user.pic} alt={user.alias}/>
                 </div>
                 <div className={styles.profileInfo}>
                     <h3 className={styles.alias}>{user.alias}</h3>
                     <p>@{user.nick}</p>
                 </div>
             </div>
-            <div> 
-                <button onClick={handleLogout}>Logout</button>
+            <div className={styles.optionSection}>
+                <div className={styles.option}>
+                    <div className={styles.icon}>
+                        <Icon icon="iconamoon:profile-fill" fontSize={20}/>
+                    </div>
+                    <div>Your profile</div>
+                </div>
+            </div>
+            <div className={styles.logoutBtn} onClick={handleLogout}>
+                <div className={styles.icon}>
+                    <Icon icon="material-symbols:logout" fontSize={20}/>
+                </div>
+                <div>Logout</div>
             </div>
         </div>
     )

@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { AuthenticationContext } from '../auth/context/authenticationContext'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Icon } from '@iconify/react'
 
 export default function Dashboard() {
     const { isAuthenticated } = useContext(AuthenticationContext)
@@ -22,14 +23,14 @@ export default function Dashboard() {
                 <ProfileNav/>
             </div>
             <div className={styles.section}>
-                <h2 className={styles.title}>Users Register</h2>
+                <div className={styles.divTitle}>
+                    <h2 className={styles.title}>Users Register</h2>
+                </div>
                 <div className={styles.searchBar}>
                     <input 
                         type='text'
                         placeholder='Search user'/>
-                    <button className={styles.searchBtn}>
-                        icono
-                    </button>
+                    <Icon className={styles.search} icon="material-symbols:search" />
                 </div>
                 <div className={styles.cardContainer}>
                     <ul className={styles.cards}>

@@ -12,18 +12,28 @@ const getToken = () =>
 export const GetUser = (uid, state) => {
     getToken().then((token) => {
         console.log(`Token: ${token}`)
-        fetch({
+        axios({
             method: 'get',
-            url: `${URL}/users/me`,
+            url: `https://api-gateway-marioax.cloud.okteto.net/users/me`,
             headers: {
+                'X-Requested-With': 'XMLHttpRequest',
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
                 'Access-Control-Allow-Origin': "*"
             },
+            proxy: {
+                protocol: 'http',
+                host: 'api-gateway.marioax',
+                port: 3000,
+            },
             // baseURL: `${ul}`,
         })
         .then((response) => {
-            state(response.data)
+            console.log(response)
+            // state(response.data)
+        })
+        .catch(() => {
+            
         })
     })
 }

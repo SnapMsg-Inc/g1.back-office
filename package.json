@@ -40,10 +40,10 @@
     ]
   },
   "devDependencies": {
+    "@iconify/react": "^4.1.1",
     "@svgr/webpack": "^8.1.0"
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
-  },
-  "proxy": "http://api-gateway.marioax:3000"
+  }
 }
