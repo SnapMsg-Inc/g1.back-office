@@ -2,8 +2,8 @@
 // import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import * as firebase from 'firebase/auth'
 import firebaseApp from "./firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
+import { signInWithEmailAndPassword, signInWithCredential, signInWithCustomToken } from "firebase/auth";
+import { GoogleAuthProvider } from 'firebase/auth';
 // GoogleSignin.configure({
 //     webClientId: provicer.env.WEB_CLIENT_ID
 // });
@@ -17,5 +17,7 @@ export const LoginAccount = (email, password) =>
 export const LogoutAccount = () =>
     firebase.getAuth(firebaseApp).signOut()
     
-// export const SignInWithGoogle = () => 
-//     GoogleSignin.signIn()
+export const LoginFederate = (credential) =>
+    signInWithCredential(firebase.getAuth(), GoogleAuthProvider.credential(credential))
+
+    

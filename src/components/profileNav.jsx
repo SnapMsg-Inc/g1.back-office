@@ -40,12 +40,12 @@ export default function ProfileNav() {
                     </div>
                     <div>Your profile</div>
                 </div>
-            </div>
-            <div className={styles.logoutBtn} onClick={handleLogout}>
-                <div className={styles.icon}>
-                    <Icon icon="material-symbols:logout" fontSize={20}/>
+                <div className={styles.option} onClick={handleLogout}>
+                    <div className={styles.icon}>
+                        <Icon icon="material-symbols:logout" fontSize={20}/>
+                    </div>
+                    <div>Logout</div>
                 </div>
-                <div>Logout</div>
             </div>
         </div>
     )

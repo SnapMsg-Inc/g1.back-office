@@ -13,9 +13,11 @@ const login = {
 export default function Header() {
     const { isAuthenticated } = useContext(AuthenticationContext)
 
+    const ref = isAuthenticated ? "#" : "/"
+
     return (
         <div className={styles.container}>
-            <a href={isAuthenticated ? "#" : "/"} className={styles.logo}>
+            <a href={ref} className={styles.logo}>
                 <img src={logo} alt='SnapMsg'/>
                 SnapMsg 
             </a>

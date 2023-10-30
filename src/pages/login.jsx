@@ -5,13 +5,14 @@ import Spinner from "react-activity/dist/Spinner";
 import "react-activity/dist/Spinner.css";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
-    const { onLogin, isLoading, isAuthenticated } = useContext(AuthenticationContext)
+    const { onLogin, isLoading, isAuthenticated, onLoginFederate } = useContext(AuthenticationContext)
     const [isVisible, setIsVisible] = useState(false)
     const navigate = useNavigate()
-    
+
     const handleViewPassword = () => setIsVisible(!isVisible)
 
     const handleChange = (e) => {
@@ -77,11 +78,13 @@ export default function Login() {
                         }
                     </div>
                 </form>
-                <div className={styles.federate}>
-                    <Icon icon="ri:google-fill" />
-                    <button>
-                        Sign in with Google
-                    </button>
+                <div className={styles.federate} >
+                    <GoogleLogin onSuccess={
+                        (response) => {
+                            console.log(response)
+                            onLoginFederate(response.credential)
+                        }
+                    }/>
                 </div>
             </div>
         </div>

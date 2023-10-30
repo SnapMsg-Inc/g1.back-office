@@ -1,6 +1,6 @@
 import { createContext, useState, useReducer } from "react"
 import { SignInReducer } from "./signinReducer"
-import { LoginAccount, LogoutAccount } from "../authentication"
+import { LoginAccount, LogoutAccount, LoginFederate } from "../authentication"
 import firebaseApp from "../firebase"
 import { getAuth } from "firebase/auth"
 import { useEffect } from "react"
@@ -17,7 +17,6 @@ export const AuthenticationContextProvider = ({children}) => {
     const [signedIn, dispatchSignedIn] = useReducer(SignInReducer,{
         userToken:null,
     })
-
     
     useEffect(()=>{
         const checkAuth = () => {
@@ -55,6 +54,21 @@ export const AuthenticationContextProvider = ({children}) => {
         })
     }
 
+    const onLoginFederate = (credential) => {
+        setIsLoading(true)
+        setError(false)
+        LoginFederate(credential)
+        .then((userCredential) => {
+            const { uid } = userCredential.user
+            console.log(uid)
+            setIsLoading(false)
+        })
+        .catch((error) => {
+            console.log(error)
+            setIsLoading(false)
+        })
+    }
+
     const onLogout = () => {
         dispatchSignedIn({type:"SIGN_OUT"})
         LogoutAccount()
@@ -68,6 +82,7 @@ export const AuthenticationContextProvider = ({children}) => {
                 error,
                 onLogin,
                 onLogout,
+                onLoginFederate,
             }}>
             {children}
         </AuthenticationContext.Provider>

@@ -28,7 +28,7 @@ export default function Dashboard() {
                 </div>
                 <div className={styles.searchBar}>
                     <input 
-                        type='text'
+                        type='search'
                         placeholder='Search user'/>
                     <Icon className={styles.search} icon="material-symbols:search" />
                 </div>
