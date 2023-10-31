@@ -3,7 +3,8 @@
     flex-direction: column;
     width: 15%;
     padding: 10px;
-    background-color: white;
+    background-color: black;
+    color: #1ed760
 }
 
 .profile {
@@ -62,6 +63,7 @@
     margin-left: 10px;
     padding-left: 15px;
     cursor: pointer;
+    color: #1ed760
 }
 
 .option {
@@ -73,6 +75,7 @@
     align-content: center;
     padding: 10px;
     text-decoration: none;
+    color: #1ed760
 }
 
 .option:active {
@@ -80,10 +83,10 @@
 }
 
 .option:visited {
-    color: #535353;
+    color: #1ed760;
 }
 
 .option:hover {
-    background-color: #e4e4e4;
+    background-color: #535353;
     border-radius: 10px 0 0 10px;
 }

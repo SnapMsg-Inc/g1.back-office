@@ -8,6 +8,8 @@ import Login from "./pages/init/login";
 import Users from "./pages/scenes/users";
 import Profile from "./pages/scenes/profile";
 import Me from "./pages/scenes/me";
+import Posts from "./pages/scenes/posts";
+import Dashboard from "./pages/scenes/dashboard";
 
 function App() {
     const  { isAuthenticated } = useContext(AuthenticationContext)
@@ -20,8 +22,10 @@ function App() {
             <Routes>
                 <Route path={"/"} element={<Home/>}/>
                 <Route path={"/sign-in"} element={<Login/>} />
-                <Route path={"/users"} element={<Users/>}/>
                 <Route path={"/me"} element={<Me/>}/>
+                <Route path={"/users"} element={<Users/>}/>
+                <Route path={"/posts"} element={<Posts/>}/>
+                <Route path={"/dashboard"} element={<Dashboard/>}/>
                 <Route path={"/profile/:uid"} element={<Profile/>}/>
             </Routes>
         </div>

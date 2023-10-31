@@ -43,6 +43,7 @@ export const AuthenticationContextProvider = ({children}) => {
             dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
             console.log('Inicie sesion')
             GetUser(setData)
+            console.log(data)
             setIsLoading(false)
         })
         .catch((error) => {

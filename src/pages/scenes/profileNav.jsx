@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import styles from '../../styles/components/profileNav.module.css'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 import { Icon } from '@iconify/react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const user = {
     "uid": "N4e4sJYhlmOQawJkwsXliQzoP8z1",
@@ -37,18 +37,22 @@ export default function ProfileNav() {
                 </div>
             </div>
             <div className={styles.optionSection}>
-                <NavLink className={styles.option} to={"/me"}>
+                <Link className={styles.option} to={"/me"}>
                     <Icon icon="iconamoon:profile-fill" fontSize={20}/>
                     <div>Your profile</div>
-                </NavLink>
-                <NavLink className={styles.option} to={"/dashboard"} >
+                </Link>
+                <Link className={styles.option} to={"/dashboard"} >
                     <Icon icon="material-symbols:dashboard" fontSize={20}/>
                     <div>Dashboard</div>
-                </NavLink>
-                <NavLink className={styles.option} to={"/users"} >
+                </Link>
+                <Link className={styles.option} to={"/users"} >
                     <Icon icon="ph:users-three-fill" fontSize={20}/>
                     <div>Users</div>
-                </NavLink>
+                </Link>
+                <Link className={styles.option} to={"/posts"} >
+                    <Icon icon="gridicons:posts" fontSize={20}/>
+                    <div>Posts</div>
+                </Link>
                 <div className={styles.option} onClick={handleLogout}>
                     <div className={styles.icon}>
                         <Icon icon="material-symbols:logout" fontSize={20}/>
