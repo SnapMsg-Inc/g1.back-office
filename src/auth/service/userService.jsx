@@ -16,17 +16,11 @@ export const GetUser = (uid, state) => {
             method: 'get',
             url: `https://api-gateway-marioax.cloud.okteto.net/users/me`,
             headers: {
-                'X-Requested-With': 'XMLHttpRequest',
+                'Access-Control-Allow-Origin': `${URL}`,
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
-                'Access-Control-Allow-Origin': "*"
+                'X-Requested-With': 'XMLHttpRequest'
             },
-            proxy: {
-                protocol: 'http',
-                host: 'api-gateway.marioax',
-                port: 3000,
-            },
-            // baseURL: `${ul}`,
         })
         .then((response) => {
             console.log(response)

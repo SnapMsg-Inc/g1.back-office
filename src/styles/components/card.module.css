@@ -22,6 +22,11 @@
     padding: 10px;
 }
 
+.content h2{
+    margin: 0;
+    padding: 0;
+}
+
 .content p {
     margin: 0;
     padding: 0;
@@ -42,8 +47,10 @@
 .profile {
     background-color: #1ed760;
     color: white;
-    width: 70%;
-    height: 30px;
+    width: 90%;
+    height: 40px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 5px;
 } 

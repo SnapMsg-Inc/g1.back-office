@@ -1,27 +1,12 @@
-import styles from '../styles/pages/dashboard.module.css'
-import UserCard from '../components/userCard'
-import user from '../utils/data/user.json'
-import ProfileNav from '../components/profileNav'
-import { useContext } from 'react'
-import { AuthenticationContext } from '../auth/context/authenticationContext'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import styles from '../../styles/pages/users.module.css'
+import UserCard from '../../components/userCard'
+import user from '../../utils/data/user.json'
 import { Icon } from '@iconify/react'
 
-export default function Dashboard() {
-    const { isAuthenticated } = useContext(AuthenticationContext)
-    const navigateTo = useNavigate()
-
-    useEffect(() => {
-        if (!isAuthenticated)
-            navigateTo('/')
-    }, [isAuthenticated, navigateTo])
+export default function Users() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.perfil}>
-                <ProfileNav/>
-            </div>
             <div className={styles.section}>
                 <div className={styles.divTitle}>
                     <h2 className={styles.title}>Users Register</h2>

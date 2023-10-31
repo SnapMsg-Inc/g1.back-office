@@ -1,19 +1,22 @@
 .container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 15%;
     padding: 10px;
+    background-color: white;
 }
 
 .profile {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    align-content: flex-start;
     border: none;
     border-bottom: 1px solid #ccc;
 }
 
 .profileImage {
-    padding: 20px;
+    padding: 10px;
 }
 
 .profileImage img {
@@ -69,6 +72,15 @@
     align-items: flex-start;
     align-content: center;
     padding: 10px;
+    text-decoration: none;
+}
+
+.option:active {
+    background-color: #e4e4e4;
+}
+
+.option:visited {
+    color: #535353;
 }
 
 .option:hover {

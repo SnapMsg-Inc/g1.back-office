@@ -1,8 +1,8 @@
-import styles from '../styles/pages/header.module.css'
-import ListButton from '../utils/listButton';
-import logo from '../logo.svg'
+import styles from '../../styles/pages/header.module.css'
+import ListButton from '../../utils/listButton';
+import logo from '../../logo.svg'
 import { useContext } from 'react';
-import { AuthenticationContext } from '../auth/context/authenticationContext';
+import { AuthenticationContext } from '../../auth/context/authenticationContext';
 
 const login = {
     "id": 1,

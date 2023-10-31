@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from '../styles/components/card.module.css'
 
 export default function UserCard({user}) {
@@ -13,7 +14,9 @@ export default function UserCard({user}) {
                         <p>@{user.nick}</p>
                         <p>Followers: {user.followers} Follows: {user.follows}</p>
                     </div>
-                    <button className={styles.profile}>View Profile</button>
+                    <Link className={styles.profile} to={`/profile/${user.uid}`}>
+                        View Profile
+                    </Link>
                 </div>
             </div>
         </li>

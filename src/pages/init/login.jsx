@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import styles from '../styles/pages/login.module.css'
-import { AuthenticationContext } from "../auth/context/authenticationContext";
+import styles from '../../styles/pages/login.module.css'
+import { AuthenticationContext } from "../../auth/context/authenticationContext";
 import Spinner from "react-activity/dist/Spinner";
 import "react-activity/dist/Spinner.css";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ export default function Login() {
     
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/dashboard');
+            navigate('/users');
         }
     }, [isAuthenticated, navigate]);
 

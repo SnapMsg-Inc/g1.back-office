@@ -1,0 +1,61 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #e4e4e4;
+}
+
+.profile {
+    width: 60vw;
+}
+
+.postMe {
+    width: 40vw;
+    background-color: white;
+}
+
+.banner {
+    width: 100%;
+    height: 30vh;
+    background: url("https://mobizent.net/wp-content/uploads/2018/04/Home-Four-Banner-Background-Image.png");
+}
+
+.info {
+    width: 20vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+    margin-top: -60px;
+}
+
+.imgInfo {
+    padding-left: 10%;
+}
+
+.imgInfo img{
+    width: 100px;
+    height: 100px;
+    max-width: 100%;
+    border-radius: 50%;
+    border: 5px solid black;
+}
+
+.textInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-left: 3%;
+}
+
+.textInfo h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.textInfo p {
+    margin: 0;
+    padding: 0;
+}
