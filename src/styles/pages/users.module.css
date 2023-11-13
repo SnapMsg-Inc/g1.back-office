@@ -1,5 +1,5 @@
 .container {
-    width: 100%;
+    width: 78.7vw;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -76,7 +76,7 @@
     height: 80vh;
     max-height: 80vh;
     overflow-y: auto;
-    margin: 0 2%;
+    margin: 1% 2%;
     padding: 0;
 }
 

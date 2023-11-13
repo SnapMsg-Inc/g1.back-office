@@ -3,7 +3,7 @@ import styles from '../../styles/pages/home.module.css'
 export default function Home() {
     return (
         <div className={styles.container}>
-            <div>
+            <div className={styles.home}>
                 <p className={styles.title}>
                     <strong>
                         Welcome to Back Office

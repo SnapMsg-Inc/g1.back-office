@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet";
 import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthenticationContext } from "./auth/context/authenticationContext";
@@ -19,9 +18,6 @@ function App() {
 
     return (
         <div className={style}>
-            <Helmet>
-                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-            </Helmet>
             {isAuthenticated ? <ProfileNav/> : <Header/> }
             <Routes>
                 <Route path={"/"} element={<Home/>}/>

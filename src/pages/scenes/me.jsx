@@ -1,4 +1,7 @@
+import { Icon } from '@iconify/react'
+import PostCard from '../../components/postCard'
 import styles from '../../styles/pages/me.module.css'
+import posts from '../../utils/data/posts.json'
 
 const user = {
     "uid": "N4e4sJYhlmOQawJkwsXliQzoP8z1",
@@ -27,11 +30,33 @@ export default function Me() {
                     <h3>{user.alias}</h3>
                     <p>@{user.nick}</p>
                     <p>{user.interests}</p>
-                    <p>{` ${user.follows} Follows  ${user.followers} Followers`}</p>
+                    <p>
+                        {user.follows}
+                        <strong>Follows</strong> 
+                        {user.followers} 
+                        <strong>Followers</strong>    
+                    </p>
+                </div>
+                <div className={styles.metrics}>
+                    <div className={styles.titleMetrics}>
+                        <h3>Métricas</h3>
+                        <Icon icon="ion:stats-chart-sharp" size={30}/>
+                    </div>
                 </div>
             </div>
             <div className={styles.postMe}>
-                postSSS
+                <div className={styles.title}>
+                    <h2>Post User</h2>
+                </div>
+                <div className={styles.postsContainer}>
+                    <ul className={styles.posts}>
+                        {posts.filter((post) => post.uid === user.uid).map((post) => (
+                            <PostCard key={post.pid} 
+                                post={post}
+                                user={user}/>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     )

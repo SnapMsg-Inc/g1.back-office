@@ -38,26 +38,24 @@ export default function ProfileNav() {
             </div>
             <div className={styles.optionSection}>
                 <Link className={styles.option} to={"/me"}>
-                    <Icon icon="iconamoon:profile-fill" fontSize={20}/>
-                    <div>Your profile</div>
+                    <Icon icon="iconamoon:profile-fill" className={styles.icon}/>
+                    <div className={styles.textOption}>Your profile</div>
                 </Link>
                 <Link className={styles.option} to={"/dashboard"} >
-                    <Icon icon="material-symbols:dashboard" fontSize={20}/>
-                    <div>Dashboard</div>
+                    <Icon icon="material-symbols:dashboard" className={styles.icon}/>
+                    <div className={styles.textOption}>Dashboard</div>
                 </Link>
                 <Link className={styles.option} to={"/users"} >
-                    <Icon icon="ph:users-three-fill" fontSize={20}/>
-                    <div>Users</div>
+                    <Icon icon="ph:users-three-fill" className={styles.icon}/>
+                    <div className={styles.textOption}>Users</div>
                 </Link>
                 <Link className={styles.option} to={"/posts"} >
-                    <Icon icon="gridicons:posts" fontSize={20}/>
-                    <div>Posts</div>
+                    <Icon icon="gridicons:posts" className={styles.icon}/>
+                    <div className={styles.textOption}>Posts</div>
                 </Link>
                 <div className={styles.option} onClick={handleLogout}>
-                    <div className={styles.icon}>
-                        <Icon icon="material-symbols:logout" fontSize={20}/>
-                    </div>
-                    <div>Logout</div>
+                    <Icon icon="material-symbols:logout" className={styles.icon}/>
+                    <div className={styles.textOption}>Logout</div>
                 </div>
             </div>
         </div>

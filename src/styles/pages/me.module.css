@@ -1,5 +1,5 @@
 .container {
-    width: 100%;
+    width: 78.7vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -13,7 +13,12 @@
 .postMe {
     width: 40%;
     background-color: black;
-    color: #1ed760
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+    color: #1ed760;
+    padding: 2%;
 }
 
 .banner {
@@ -42,6 +47,7 @@
     max-width: 100%;
     border-radius: 50%;
     border: 5px solid black;
+    background-color: black;
 }
 
 .textInfo {
@@ -52,6 +58,10 @@
     padding-left: 3%;
 }
 
+.textInfo strong {
+    margin: 0 10px;
+}
+
 .textInfo h3 {
     margin: 0;
     padding: 0;
@@ -59,5 +69,71 @@
 
 .textInfo p {
     margin: 0;
+    padding: 0;
+}
+
+.postsContainer {
+    width:100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    overflow-y: auto;
+}
+
+.posts {
+    height: 80vh;
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    gap: 2%;
+}
+
+
+.postsContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+.postsContainer::-webkit-scrollbar-track {
+    background: #232E33;
+    border-radius: 10px;        
+}
+
+.postsContainer::-webkit-scrollbar-thumb {
+    background-color: #1ed760;    
+    border-radius: 10px;       
+    border: 1px solid #232E33
+}
+
+.title {
+    padding-bottom: 10px;
+}
+
+.title h2{
+    margin: 0;
+    padding: 0;
+}
+
+.metrics {
+    width: 80%;
+    padding-left: 3%;
+    margin-top: 10px;
+}
+
+.titleMetrics {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.titleMetrics h3 {
+    margin: 0;
+    margin-right: 10px;
     padding: 0;
 }

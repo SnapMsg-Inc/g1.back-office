@@ -1,41 +1,48 @@
 .container {
     display: flex;
     flex-direction: column;
-    width: 15%;
-    padding: 10px;
-    background-color: black;
-    color: #1ed760
+    width: 21.3vw;
+    background-color: #1f2a40;
+    color: white;
+    border-radius: 0 71px 71px 0;
 }
 
 .profile {
+    width: 90%;
+    height: 15.7vh;
+    align-self: center;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    align-content: flex-start;
     border: none;
     border-bottom: 1px solid #ccc;
 }
 
 .profileImage {
-    padding: 10px;
+    width: 5vw;
+    height: 9vh;
+    padding: 5%;
 }
 
 .profileImage img {
-    width: 50px;
-    height: 50px;
+    width: 5vw;
+    height: 9vh;
     border-radius: 50%;
     max-width: 100%;
+    max-height: 100%;
     align-self:center;
 }
 
 .profileInfo p{
     margin: 0;
     padding: 0;
+    color: #687684;
+    font-size: 1.67vw;
 }
 
 .profileInfo h3{
     margin: 0;
     padding: 0;
+    font-size: 1.67vw;
 }
 
 .alias {
@@ -45,25 +52,15 @@
     font-weight: bold;
 }
 
-.icon {
-    padding: 2px;
-}
-
 .optionSection {
-    width: 100%;
+    width: 90%;
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
+    align-self: center;
     align-items: center;
+    justify-content: center;
     align-content: center;
-    border: none;
-    background-color: transparent;
-    padding: 0 10px;
-    margin-top: 20px;
-    margin-left: 10px;
-    padding-left: 15px;
-    cursor: pointer;
-    color: #1ed760
+    color: white;
 }
 
 .option {
@@ -71,11 +68,11 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     align-content: center;
-    padding: 10px;
+    padding: 12px;
     text-decoration: none;
-    color: #1ed760
+    color: white;
 }
 
 .option:active {
@@ -83,10 +80,21 @@
 }
 
 .option:visited {
-    color: #1ed760;
+    color: white;
 }
 
 .option:hover {
     background-color: #535353;
     border-radius: 10px 0 0 10px;
+}
+
+.textOption {
+    width: 90%;
+    color: white;
+    font-size: 1.9vw;
+}
+
+.icon {
+    font-size: 3.3vw;
+    padding: 2px;
 }

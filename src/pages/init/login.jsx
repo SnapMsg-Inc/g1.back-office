@@ -19,25 +19,27 @@ export default function Login() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         onLogin(formData.email, formData.password)
         console.log(`email: ${formData.email} password: ${formData.password}`)
+        navigate('/users')
     }
-    
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/users');
-        }
-    }, [isAuthenticated, navigate]);
+
+    useEffect(()=> {
+        isAuthenticated ? navigate('/users') : navigate('#')
+    },[isAuthenticated, navigate])
+
 
     return (
         <div className={styles.container}>
             <div className={styles.containerForm}>
-                <div className={styles.title}>
-                    Welcome Back!!
-                </div>
+                <p className={styles.title}>
+                    <strong>
+                        Welcome Back!!
+                    </strong>
+                </p>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.inputForm}>
                         <input
@@ -49,7 +51,7 @@ export default function Login() {
                             onChange={handleChange}
                             autoComplete="name"
                         />
-                        <Icon icon="material-symbols:mail" />
+                        <Icon icon="material-symbols:mail" className={styles.icon}/>
                     </div>
                     <div className={styles.inputForm}>
                         <input
@@ -61,31 +63,35 @@ export default function Login() {
                             onChange={handleChange}
                             autoComplete="name"
                         />
-                        <Icon icon={isVisible ? "mdi:eye" : "mdi:eye-off"} onClick={handleViewPassword}/>
+                        <Icon icon={isVisible ? "mdi:eye" : "mdi:eye-off"} 
+                            onClick={handleViewPassword}
+                            className={styles.icon}/>
                     </div>
                     <div className={styles.forgotPassword}>
-                        Forgot your password?
+                        Forgot to password?
                     </div>
                     <div className={isLoading ? styles.spinner : styles.onSubmit}>
                         {isLoading ? 
                             <Spinner color="#1ed760" size={10} speed={1} animating={true} /> 
                             :    
                             <button 
-                                className={styles.buttonSubmit} 
-                                type="submit">
+                            className={styles.buttonSubmit} 
+                            type="submit">
                                 Sign In
                             </button>
                         }
                     </div>
-                </form>
-                <div className={styles.federate} >
-                    <GoogleLogin onSuccess={
-                        (response) => {
-                            console.log(response)
-                            onLoginFederate(response.credential)
+                    <div className={styles.federate} >
+                        <GoogleLogin onSuccess={
+                            (response) => {
+                                console.log(response)
+                                onLoginFederate(response.credential)
+                                navigate('/users')
+                            }
                         }
-                    }/>
-                </div>
+                        />
+                    </div>
+                </form>
             </div>
         </div>
     );

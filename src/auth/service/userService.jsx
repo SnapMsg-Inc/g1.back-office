@@ -10,23 +10,23 @@ const getToken = () =>
     getIdToken(getAuth(firebaseApp).currentUser, true)
 
 export const GetUser = (uid, state) => {
-    getToken().then(async (token) => {
+    getToken().then((token) => {
         console.log(`id-token: ${token}`)
-        await axios.get({
-            url: `https://api-gateway-marioax.cloud.okteto.net/users/me`,
+        axios.get(
+            "https://api-gateway-marioax.cloud.okteto.net/users/me",
+        {
             headers: {
-                'Access-Control-Allow-Origin': "*",
+                'Access-Control-Allow-Origin': "https://backoffice-backoffice-marioax.cloud.okteto.net/",
                 'Authorization' : `Bearer ${token}`,
-              //  'Content-Type' : 'application/json',
-                //'X-Requested-With': 'XMLHttpRequest'
+                'Content-Type' : 'application/json',
             },
         })
         .then((response) => {
             console.log(response)
-            // state(response.data)
+            state(response.data)
         })
-        .catch(() => {
-            
+        .catch((error) => {
+            console.log(error)
         })
     })
 }

@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 export default function ListButton({ section }) {
     let selected = {
         textDecoration: "underline",
-        color: "#535353",
+        color: "white",
     };
 
     let element = {
         textDecoration: "none",
-        color: "#535353",
+        color: "white",
     };
 
     return (

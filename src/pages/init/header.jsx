@@ -1,8 +1,8 @@
 import styles from '../../styles/pages/header.module.css'
 import ListButton from '../../utils/listButton';
-import logo from '../../logo.svg'
 import { useContext } from 'react';
 import { AuthenticationContext } from '../../auth/context/authenticationContext';
+import { Icon } from '@iconify/react';
 
 const login = {
     "id": 1,
@@ -18,8 +18,12 @@ export default function Header() {
     return (
         <div className={styles.container}>
             <a href={ref} className={styles.logo}>
-                <img src={logo} alt='SnapMsg'/>
-                SnapMsg 
+                <div className={styles.logoIcon}>
+                    <Icon icon={'ph:snapchat-logo-fill'} className={styles.icon}/>
+                </div>
+                <div className={styles.name}>
+                    SnapMsg 
+                </div>
             </a>
             { isAuthenticated ? null : 
                 <ul className={styles.headerList}>
