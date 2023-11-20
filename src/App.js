@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthenticationContext } from "./auth/context/authenticationContext";
 import ProfileNav from "./pages/scenes/profileNav";
@@ -10,23 +10,32 @@ import Profile from "./pages/scenes/profile";
 import Me from "./pages/scenes/me";
 import Posts from "./pages/scenes/posts";
 import Dashboard from "./pages/scenes/dashboard";
+import Post from "./pages/scenes/post";
+import { auth, firebaseApp } from "./auth/firebase";
 
 function App() {
     const  { isAuthenticated } = useContext(AuthenticationContext)
-
-    const style = isAuthenticated ? "dashboard" : "App"
+    const location = useLocation()
+    const showHeader = location.pathname === '/' || location.pathname === '/sign-in'
+    const style = isAuthenticated && !showHeader ? "dashboard" : "App"
+    
+    if (firebaseApp) 
+        console.log('Firebase initialize')
+    if (auth)
+        console.log('Auth current user ', auth.currentUser)
 
     return (
         <div className={style}>
-            {isAuthenticated ? <ProfileNav/> : <Header/> }
+            {showHeader ? <Header/> : <ProfileNav/>}
             <Routes>
                 <Route path={"/"} element={<Home/>}/>
-                <Route path={"/sign-in"} element={<Login/>} />
+                <Route path={"/sign-in"} element={<Login />}/>
                 <Route path={"/me"} element={<Me/>}/>
                 <Route path={"/users"} element={<Users/>}/>
                 <Route path={"/posts"} element={<Posts/>}/>
                 <Route path={"/dashboard"} element={<Dashboard/>}/>
                 <Route path={"/profile/:uid"} element={<Profile/>}/>
+                <Route path={"/post/:pid"} element={<Post/>}/>
             </Routes>
         </div>
     );

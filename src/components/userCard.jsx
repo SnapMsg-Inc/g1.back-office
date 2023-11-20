@@ -4,21 +4,21 @@ import styles from '../styles/components/card.module.css'
 export default function UserCard({user}) {
     return (
         <li className={styles.cardsItem}>
-            <div className={styles.card}>
-                <div className={styles.cardImage}>
-                    <img src={user.pic} alt={user.alias} sizes={20}/>
-                </div>
+            <Link className={styles.card} to={`/profile/${user.uid}`}>
                 <div className={styles.cardContent}>
+                    <div className={styles.cardImage}>
+                        {user.pic !== '' ? <img src={user.pic} alt={user.alias} sizes={20}/>
+                        : <></>}
+                    </div>
                     <div className={styles.content}>
                         <h2>{user.alias}</h2>    
                         <p>@{user.nick}</p>
-                        <p>Followers: {user.followers} Follows: {user.follows}</p>
                     </div>
-                    <Link className={styles.profile} to={`/profile/${user.uid}`}>
-                        View Profile
-                    </Link>
                 </div>
-            </div>
+                <div className={styles.interests}>
+                    <p>{user.interests.join(', ')}</p>
+                </div>
+            </Link>
         </li>
     )
 }

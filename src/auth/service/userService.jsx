@@ -1,32 +1,28 @@
 import axios from "axios";
-import { getAuth, getIdToken } from "firebase/auth";
-import firebaseApp from "../firebase";
+import { getIdToken } from "firebase/auth";
+import { auth } from "../firebase";
 
-const URL = `${process.env.REACT_APP_URL_USERS}`
+const URL = 'https://api-gateway-marioax.cloud.okteto.net/users'
 
-console.log(URL)
+export const GetToken = async () => await getIdToken(auth.currentUser, true)
 
-const getToken = () =>
-    getIdToken(getAuth(firebaseApp).currentUser, true)
+export const GetMe = async (token) =>
+    await axios.get(
+        `${URL}/me`,
+    {
+        headers: {
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'application/json',
+        },
+    })
 
-export const GetUser = (uid, state) => {
-    getToken().then((token) => {
-        console.log(`id-token: ${token}`)
-        axios.get(
-            "https://api-gateway-marioax.cloud.okteto.net/users/me",
+export const GetUsers = async (token, page) =>
+    await axios.get(
+        `${URL}?limit=20&page=${page}`,
         {
             headers: {
-                'Access-Control-Allow-Origin': "https://backoffice-backoffice-marioax.cloud.okteto.net/",
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
-            },
-        })
-        .then((response) => {
-            console.log(response)
-            state(response.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    })
-}
+            }
+        }
+    )

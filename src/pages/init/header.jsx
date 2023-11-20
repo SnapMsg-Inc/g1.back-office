@@ -10,6 +10,12 @@ const login = {
     "path": "/sign-in"
 }
 
+const user = {
+    "id": 2,
+    "name": 'Init',
+    "path": "/users"
+}
+
 export default function Header() {
     const { isAuthenticated } = useContext(AuthenticationContext)
 
@@ -25,11 +31,10 @@ export default function Header() {
                     SnapMsg 
                 </div>
             </a>
-            { isAuthenticated ? null : 
-                <ul className={styles.headerList}>
-                    <ListButton key={login.id} section={login} />
-                </ul>
-            }
+           <ul className={styles.headerList}>
+                <ListButton key={isAuthenticated ? user.id : login.id} 
+                            section={isAuthenticated ? user : login} />
+            </ul>
         </div>
     )
 } 

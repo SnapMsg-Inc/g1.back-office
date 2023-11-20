@@ -1,23 +1,14 @@
 import { Link } from 'react-router-dom';
 import styles from '../styles/utils/hashtag.module.css'
 
-const HashtagText = ({ text }) => {
-    const element = {
-        color: "#1ed760",
-    }
-        
+const HashtagText = ({ text, isLink }) => {
     const parts = text.split(/(#\w+)/g);
 
     const textWithHashtags = parts.map((part, index) => {
-        if (part.startsWith('#')) {
-            return (
-                <Link key={index} style={element}>
-                    {part}
-                </Link>
-            );
-        } else {
+        if (part.startsWith('#')) 
+            return isLink ? <Link key={index}> {part} </Link> : <strong key={index}> {part} </strong>
+        else
             return part;
-        }
     });
 
     return (

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from '../../styles/pages/login.module.css'
 import { AuthenticationContext } from "../../auth/context/authenticationContext";
 import Spinner from "react-activity/dist/Spinner";
@@ -9,7 +9,7 @@ import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
-    const { onLogin, isLoading, isAuthenticated, onLoginFederate } = useContext(AuthenticationContext)
+    const { onLogin, isLoading, onLoginFederate, isAuthenticated } = useContext(AuthenticationContext)
     const [isVisible, setIsVisible] = useState(false)
     const navigate = useNavigate()
 
@@ -22,15 +22,13 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onLogin(formData.email, formData.password)
+        onLogin(formData.email, formData.password, (path) => navigate(path))
         console.log(`email: ${formData.email} password: ${formData.password}`)
-        navigate('/users')
     }
 
-    useEffect(()=> {
-        isAuthenticated ? navigate('/users') : navigate('#')
-    },[isAuthenticated, navigate])
-
+    useEffect(()=> 
+        isAuthenticated ? navigate('/') : navigate('#')
+    , [navigate, isAuthenticated])
 
     return (
         <div className={styles.container}>
@@ -85,8 +83,8 @@ export default function Login() {
                         <GoogleLogin onSuccess={
                             (response) => {
                                 console.log(response)
-                                onLoginFederate(response.credential)
-                                navigate('/users')
+                                onLoginFederate(response.credential,
+                                                (path) => navigate(path))
                             }
                         }
                         />

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-// import { initializeAuth } from 'firebase/auth';
+import { browserLocalPersistence, getAuth, setPersistence } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -10,6 +10,8 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_APP_ID
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig)
+export const auth = getAuth()
 
-export default firebaseApp;
+setPersistence(auth, browserLocalPersistence)
+

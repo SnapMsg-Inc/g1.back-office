@@ -1,0 +1,66 @@
+.postsItem {
+    width: 12vw;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 10px;
+    background-color: white;
+}
+
+.post {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: #687684;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    padding-bottom: 5px;
+}
+
+.cardImage img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.cardContent {
+    flex: 1;
+}
+
+.content {
+    overflow: hidden;
+}
+
+.content h2 {
+    margin: 0;
+    font-size: 14px;
+    color: #1f2a40;
+}
+
+.content p {
+    margin: 0;
+    font-size: 12px;
+    color: #687684;
+}
+
+.content span {
+    font-size: 12px;
+    color: #687684;
+}
+
+.contentPost {
+    padding: 10px;
+    padding-top: 0;
+}
+
+@media only screen and (min-width:1920px) {
+    .postsItem {
+        width: 11vw;
+        height: 150px;
+    }
+}

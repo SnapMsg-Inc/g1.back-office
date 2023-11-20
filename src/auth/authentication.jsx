@@ -1,13 +1,12 @@
-import * as firebase from 'firebase/auth'
-import firebaseApp from "./firebase";
+import { auth} from "./firebase";
 import { signInWithEmailAndPassword, signInWithCredential } from "firebase/auth";
 import { GoogleAuthProvider } from 'firebase/auth';
 
 export const LoginAccount = (email, password) =>
-    signInWithEmailAndPassword(firebase.getAuth(firebaseApp), email, password)
+    signInWithEmailAndPassword(auth, email, password)
 
 export const LogoutAccount = () =>
-    firebase.getAuth(firebaseApp).signOut()
+    auth.signOut()
     
 export const LoginFederate = (credential) =>
-    signInWithCredential(firebase.getAuth(), GoogleAuthProvider.credential(credential))
+    signInWithCredential(auth, GoogleAuthProvider.credential(credential))

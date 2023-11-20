@@ -1,41 +1,60 @@
 .container {
-    width: 100%;
+    width: 78.7vw;
     height: 100vh;
-    background-color: #535353;
-    color: #1ed760;
+    background-color: #1f2a40;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    margin-left: 2.6vw;
+    border-radius: 70px 0 0 70px;
 }
 
 .divTitle {
+    margin-top: 3%;
     height: 10vh;
-    margin: .5% 2%;
+    display: flex;
+    align-items: center;
 }
 
-.divTitle h2{
+.divTitle p{
     margin: 0;
     padding: 0;
+    color: white;
+    font-size: 2vw;
 }
 
 .section {
-    width: 100%;
+    width: 57vw;
     height: 100vh;
+    padding-left: 3%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     justify-content: flex-start;
 }
 
+.trendings {
+    width: 18vw;
+    background-color: #141B2D;
+    align-items: center;
+    justify-content: flex-end;
+    align-content: center;
+    overflow: hidden;
+    color: white;
+}
+
 .postsContainer {
     height: 80vh;
     max-height: 80vh;
     overflow-y: auto;
-    margin: 0 2%;
+    margin: 0;
     padding: 0;
 }
 
 .posts {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-    gap: 2%;
+    grid-template-columns: repeat(auto-fill, minmax(23%, 1fr));
+    gap: .2%;
     margin: 0;
     padding: 0;
 }
@@ -53,4 +72,41 @@
     background-color: #1ed760;    
     border-radius: 10px;       
     border: 1px solid #232E33
+}
+
+.searchBar {
+    height:3.7vh;
+    width: 70%;
+    color: #1f2a40;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    margin-bottom: 2%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    justify-content: space-between;
+}
+
+.searchBar input {
+    width: 50%;
+    border: none;
+    border-color: transparent;
+    background-color: transparent;
+    margin-left: 5px;
+    font-size: 1.3vw;
+}
+
+.searchBar input:focus {
+    outline: none;
+}
+
+.search {
+    width: 5%;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;;
+    align-self: center;
+    font-size: 1.3vw;
 }

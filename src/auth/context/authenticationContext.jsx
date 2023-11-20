@@ -1,83 +1,118 @@
 import { createContext, useState, useReducer } from "react"
 import { SignInReducer } from "./signinReducer"
 import { LoginAccount, LogoutAccount, LoginFederate } from "../authentication"
-import firebaseApp from "../firebase"
-import { getAuth } from "firebase/auth"
 import { useEffect } from "react"
-import { GetUser } from "../service/userService"
+import { GetToken, GetMe } from "../service/userService"
+import { browserLocalPersistence, onAuthStateChanged, setPersistence } from "firebase/auth"
+import { auth } from "../firebase"
 
 export const AuthenticationContext = createContext()
 
 export const AuthenticationContextProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
-    const [data, setData] = useState({
-        "uid": '',
-        "alias": '',
-        "nick": '',
-        "followers": '',
-        "follows": '',
-        "interests": [],
-        "pic": '',
-      })
     const [signedIn, dispatchSignedIn] = useReducer(SignInReducer,{
         userToken:null,
     })
     
     useEffect(()=>{
         const checkAuth = () => {
-            getAuth(firebaseApp).onAuthStateChanged((userCredential) => {
+            setIsLoading(true);
+            const unsubscribe = onAuthStateChanged(auth, (userCredential) => {
                 if (userCredential) {
-                    dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
+                    console.log('sign-in');
+                    setPersistence(auth, browserLocalPersistence);
+                    dispatchSignedIn({ type: "SIGN_IN", payload: "signed_in" });
                 } else {
-                    dispatchSignedIn({type:"SIGN_OUT"})
+                    console.log('logout');
+                    dispatchSignedIn({ type: "SIGN_OUT" });
                 }
-            })
-        }
-        checkAuth()
+                setIsLoading(false);
+            });
+            return () => unsubscribe();
+        };
+        checkAuth();
     }, [])
 
-    const onLogin = (email, password) => {
+    const onLogin = (email, password, handleNavigate) => {
         setIsLoading(true)
         setError(false)
         LoginAccount(email, password)
         .then((userCredential) => {
-            const {uid} = userCredential.user
-            console.log(uid)
-            dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
             console.log('Inicie sesion')
-            GetUser(setData)
-            console.log(data)
-            setIsLoading(false)
+            GetToken()
+            .then((token) => {
+                GetMe(token)
+                .then((response) => {
+                    console.log(response.data)
+                    if (response.data.email !== "example@example.com") {
+                    // if (response.data.is_admin !== true) {
+                        alert('Permission denied')
+                        onLogout()
+                    } else {
+                        console.log(token)
+                        dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
+                        handleNavigate('/users')
+                    }
+                })
+                .catch((error) => {
+                    console.log(error.response)
+                    if (error.response.status === 502){
+                        alert('Services not available.\nPlease retry again later')
+                        onLogout()
+                    }    
+                })
+            })
+            .finally(() => setIsLoading(false))
         })
         .catch((error) => {
             alert('Invalid username or password.\nPlease check your credentials and try again.')
             dispatchSignedIn({type: 'SIGN_OUT'})
             setError(true)
-            setIsLoading(false)
         })
+        .finally(() => setIsLoading(false))
     }
-
-    const onLoginFederate = (credential) => {
+    
+    const onLoginFederate = (credential, handleNavigate) => {
         setIsLoading(true)
         setError(false)
         LoginFederate(credential)
         .then((userCredential) => {
             const { uid } = userCredential.user
             console.log(uid)
-            setIsLoading(false)
+            GetToken()
+            .then((token) => {
+                GetMe(token)
+                .then((response) => {
+                    console.log(response.data)
+                    if (response.data.is_admin !== true) {
+                        alert('Permission denied')
+                        onLogout()
+                    } else {
+                        dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
+                        handleNavigate('/users')
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status === 502){
+                        alert('Services not available.\nPlease retry again later')
+                        onLogout()
+                    }    
+                })
+            })
+            .finally(() => setIsLoading(false))
         })
         .catch((error) => {
             console.log(error)
-            setIsLoading(false)
         })
+        .finally(() => setIsLoading(false))
     }
-
+    
     const onLogout = () => {
         dispatchSignedIn({type:"SIGN_OUT"})
         LogoutAccount()
     }
-
+    
     return (
         <AuthenticationContext.Provider
             value={{

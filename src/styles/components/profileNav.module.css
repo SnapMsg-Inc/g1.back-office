@@ -4,7 +4,7 @@
     width: 21.3vw;
     background-color: #1f2a40;
     color: white;
-    border-radius: 0 71px 71px 0;
+    border-radius: 0 70px 70px 0;
 }
 
 .profile {
@@ -18,31 +18,41 @@
 }
 
 .profileImage {
-    width: 5vw;
-    height: 9vh;
+    width: 60px;
+    height: 60px;
     padding: 5%;
 }
 
 .profileImage img {
-    width: 5vw;
-    height: 9vh;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     max-width: 100%;
-    max-height: 100%;
     align-self:center;
+}
+
+@media only screen and (min-width: 1920px) {
+    .profileImage {
+        width: 100px;
+        height: 100px;
+    }
+    .profileImage img {
+        width: 100px;
+        height: 100px;
+    }
 }
 
 .profileInfo p{
     margin: 0;
     padding: 0;
     color: #687684;
-    font-size: 1.67vw;
+    font-size: 1.2vw;
 }
 
 .profileInfo h3{
     margin: 0;
     padding: 0;
-    font-size: 1.67vw;
+    font-size: 1.2vw;
 }
 
 .alias {
@@ -53,7 +63,7 @@
 }
 
 .optionSection {
-    width: 90%;
+    width: 80%;
     display:flex;
     flex-direction: column;
     align-self: center;
@@ -84,17 +94,17 @@
 }
 
 .option:hover {
-    background-color: #535353;
-    border-radius: 10px 0 0 10px;
+    background-color: #141b2d;
+    border-radius: 10px;
 }
 
 .textOption {
     width: 90%;
     color: white;
-    font-size: 1.9vw;
+    font-size: 1vw;
 }
 
 .icon {
-    font-size: 3.3vw;
+    font-size: 2vw;
     padding: 2px;
 }
