@@ -6,7 +6,7 @@ const HashtagText = ({ text, isLink }) => {
 
     const textWithHashtags = parts.map((part, index) => {
         if (part.startsWith('#')) 
-            return isLink ? <Link key={index}> {part} </Link> : <strong key={index}> {part} </strong>
+            return isLink ? <Link to={''} key={index}> {part} </Link> : <strong key={index}> {part} </strong>
         else
             return part;
     });

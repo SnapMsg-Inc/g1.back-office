@@ -5,32 +5,43 @@ import { useContext, useEffect, useState } from 'react'
 import { GetToken, GetUsers } from '../../auth/service/userService'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 
+const INITIAL_PAGE = 0
+
 export default function Users() {
-    const { isLoading } = useContext(AuthenticationContext)
+    const { isAuthenticated } = useContext(AuthenticationContext)
+    const [page, setPage] = useState(INITIAL_PAGE)
     const [users, setUsers] = useState([])
-   
-    const handleFetchUsers = () => {
-        GetToken()
-        .then((token) => {
-            console.log('token ', token)
-            GetUsers(token, 0)
-            .then(response => {
-                setUsers(response.data)
-                console.log('users', response.data)
-            })
-            .catch(error => {
-                console.log('Error get users', error.response)
-            })
-        })
-        .catch(error => 
-            console.log('Error en users', error)
-        )
+
+    const handleNextPage = () => {
+        if (users.length === 20)
+            setPage(page => page + 1)
     }
 
+    const handlePreviewPage = () => {
+        if ((page - 1) >= INITIAL_PAGE)
+            setPage(page => page - 1)
+    }
+
+    
     useEffect(() => {
-        if (!isLoading)
+        const handleFetchUsers = async () => {
+            GetToken()
+            .then((token) => {
+                GetUsers(token, page)
+                .then(response => {
+                    setUsers(response.data)
+                })
+                .catch(error => {
+                    console.log('Error get users', error.response)
+                })
+            })
+            .catch(error => 
+                console.log('Error en users', error)
+            )
+        }
+        if (isAuthenticated)
             handleFetchUsers()
-    },[isLoading])
+    },[isAuthenticated, page, setPage])
 
     return (
         <div className={styles.container}>
@@ -50,6 +61,15 @@ export default function Users() {
                             <UserCard key={user.uid} user={user} />
                         ))}
                     </ul>
+                </div>
+                <div className={styles.pagination}>
+                    <Icon   className={styles.icon} 
+                        icon="mingcute:arrows-left-line"
+                        onClick={() => handlePreviewPage()}/>
+                    {page + 1}
+                    <Icon  className={styles.icon}
+                        icon="mingcute:arrows-right-line" 
+                        onClick={() => handleNextPage()}/>
                 </div>
             </div>
         </div>

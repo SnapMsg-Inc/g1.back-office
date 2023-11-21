@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { GetToken, GetMe } from '../../auth/service/userService'
 
 export default function ProfileNav() {
-    const { onLogout, isLoading } = useContext(AuthenticationContext)
+    const { onLogout, isAuthenticated } = useContext(AuthenticationContext)
     const [user, setUser] = useState({
         "uid": "",
         "fullname": "",
@@ -43,12 +43,12 @@ export default function ProfileNav() {
                 console.log('Error en profileNav ', error)
             })
         })
-        .catch(error => console.log('error en profileNav ', error.response))
+        .catch(error => {})
 
     useEffect(() => {
-        if (!isLoading)
+        if (isAuthenticated)
             handleFetchData();
-    },[isLoading])
+    },[isAuthenticated])
 
     return (
         <div className={styles.container}>

@@ -1,15 +1,13 @@
 import { Icon } from '@iconify/react'
 import PostCard from '../../components/postCard'
 import styles from '../../styles/pages/me.module.css'
-import posts from '../../utils/data/posts.json'
-import { useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { GetMe, GetToken } from '../../auth/service/userService'
-import { useState } from 'react'
-import { useContext } from 'react'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
+import { GetPostByNick } from '../../auth/service/postService'
 
 export default function Me() {
-    const { isLoading } = useContext(AuthenticationContext)
+    const { isAuthenticated } = useContext(AuthenticationContext)
     const [user, setUser] = useState({
         "uid": "",
         "fullname": "",
@@ -28,27 +26,42 @@ export default function Me() {
         "alias": "",
         "birthdate": ""
     })
-
-    const handleFetchMe = () => {
-        GetToken()
-        .then(token => {
-            GetMe(token)
-            .then(response =>
-                setUser(response.data)
-            )
-            .catch(error => {
-                console.log('Error', error  )
-            })
-        })
-        .catch(error => {
-            console.log('Error en ME', error)
-        })
-    }
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        if (!isLoading)
+        const handleFetchMe = async () => {
+            GetToken()
+            .then(token => {
+                GetMe(token)
+                .then(response =>
+                    setUser(response.data)
+                )
+                .catch(error => {
+                    console.log('Error', error  )
+                })
+            })
+            .catch(error => {})
+        }
+        const handleGetPostUserByNick = async () => {
+            GetToken()
+            .then(token => {
+                console.log('desde posts ',user.nick)
+                GetPostByNick(token, user.nick)
+                .then(response => {
+                    setPosts(response.data)
+                    console.log(response.data)
+                })
+                .catch(error => 
+                    console.log(error.response.status)
+                )
+            })
+            .catch(error => {})
+        }
+        if (isAuthenticated)
             handleFetchMe()
-    },[isLoading])
+        if (user.nick)
+            handleGetPostUserByNick()
+    }, [isAuthenticated, user.nick])
 
     return (
         <div className={styles.container}>
@@ -64,7 +77,7 @@ export default function Me() {
                     <div className={styles.textInfo}>
                         <h3>{user.alias}</h3>
                         <p className={styles.textNick}>@{user.nick}</p>
-                        <p>{user.interests}</p>
+                        <p>{user.interests.join(', ')}</p>
                     </div>
                     <div className={styles.btnAdmin}>
                         <button className={styles.btnIsAdmin}>Admin</button>
@@ -93,7 +106,7 @@ export default function Me() {
                 </div>
                 <div className={styles.postsContainer}>
                     <ul className={styles.posts}>
-                        {posts.filter((post) => post.uid === user.uid).map((post) => (
+                        {posts.map((post) => (
                             <PostCard key={post.pid} 
                                 post={post}
                                 user={user}/>

@@ -20,11 +20,9 @@ export const AuthenticationContextProvider = ({children}) => {
             setIsLoading(true);
             const unsubscribe = onAuthStateChanged(auth, (userCredential) => {
                 if (userCredential) {
-                    console.log('sign-in');
                     setPersistence(auth, browserLocalPersistence);
                     dispatchSignedIn({ type: "SIGN_IN", payload: "signed_in" });
                 } else {
-                    console.log('logout');
                     dispatchSignedIn({ type: "SIGN_OUT" });
                 }
                 setIsLoading(false);

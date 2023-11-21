@@ -1,18 +1,67 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import styles from '../../styles/pages/me.module.css'
-import posts from '../../utils/data/posts.json'
-import users from '../../utils/data/user.json'
 import PostCard from '../../components/postCard'
 import { Icon } from '@iconify/react'
+import { useContext, useEffect, useState } from 'react'
+import { AuthenticationContext } from '../../auth/context/authenticationContext'
+import { GetToken, GetUsersByUid } from '../../auth/service/userService'
+import { GetPostByNick } from '../../auth/service/postService'
 
 export default function Profile() {
     const { uid } = useParams()
+    const { isAuthenticated } = useContext(AuthenticationContext)
+    const [user, setUser] = useState({
+        "uid": "",
+        "alias": "",
+        "nick": "",
+        "followers": 0,
+        "follows": 0,
+        "interests": [],
+        "pic": ''
+    })
+    const [posts, setPosts] = useState([])
     const navigate = useNavigate()
-    const user = users.find((u) => u.uid === uid)
+    // const user = users.find((u) => u.uid === uid)
     
     const handleBack = () => navigate(-1)
     const handleDeleteUser = () => console.log('User deleted')
     const handleAdminUser = () => console.log('User is Admin')
+
+    useEffect(() => {
+        const handleGetUserByUid = async () => {
+            GetToken()
+            .then((token) => {
+                GetUsersByUid(token, uid)
+                .then(response => 
+                    setUser(response.data[0])    
+                )
+                .catch(error =>
+                    console.log(error.response.status)
+                )
+            })
+            .catch((error) => {})
+        }
+
+        const handleGetPostUserByNick = async () => {
+            GetToken()
+            .then(token => {
+                console.log('desde posts ',user.nick)
+                GetPostByNick(token, user.nick)
+                .then(response => {
+                    setPosts(response.data)
+                    console.log(response.data)
+                })
+                .catch(error => 
+                    console.log(error.response.status)
+                )
+            })
+            .catch(error => {})
+        }
+        if (isAuthenticated)
+            handleGetUserByUid()
+        if (user.nick)
+            handleGetPostUserByNick()
+    }, [isAuthenticated, uid, user.nick])
 
     return (
         <div className={styles.container}>
@@ -32,7 +81,7 @@ export default function Profile() {
                     <div className={styles.textInfo}>
                         <h3>{user.alias}</h3>
                         <p className={styles.textNick}>@{user.nick}</p>
-                        <p>{user.interests}</p>
+                        <p>{user.interests.join(', ')}</p>
                     </div>
                     <div className={styles.btnAdmin}>
                         <Icon className={styles.icon}
@@ -67,7 +116,7 @@ export default function Profile() {
                 </div>
                 <div className={styles.postsContainer}>
                     <ul className={styles.posts}>
-                        {posts.filter((post) => post.uid === user.uid).map((post) => (
+                        {posts.map((post) => (
                             <PostCard key={post.pid} 
                                 post={post}
                                 user={user}/>

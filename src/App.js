@@ -11,7 +11,6 @@ import Me from "./pages/scenes/me";
 import Posts from "./pages/scenes/posts";
 import Dashboard from "./pages/scenes/dashboard";
 import Post from "./pages/scenes/post";
-import { auth, firebaseApp } from "./auth/firebase";
 
 function App() {
     const  { isAuthenticated } = useContext(AuthenticationContext)
@@ -19,11 +18,6 @@ function App() {
     const showHeader = location.pathname === '/' || location.pathname === '/sign-in'
     const style = isAuthenticated && !showHeader ? "dashboard" : "App"
     
-    if (firebaseApp) 
-        console.log('Firebase initialize')
-    if (auth)
-        console.log('Auth current user ', auth.currentUser)
-
     return (
         <div className={style}>
             {showHeader ? <Header/> : <ProfileNav/>}

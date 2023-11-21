@@ -76,13 +76,17 @@
     align-items: center;
     justify-content: flex-start;
     font-size: .8vw;
-    text-overflow: ellipsis;
     padding: 10px;
 }
 
 .interests p {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 @media only screen and (min-width:1920px) {

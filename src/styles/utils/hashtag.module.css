@@ -2,17 +2,27 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2; 
+    -webkit-line-clamp: 1; 
     -webkit-box-orient: vertical;
 }
 
 .text a {
+    font-size: 1.6vw;
     color: #1f2a40;
     font-weight: bold;
     text-decoration: none;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+}
+
+@media only screen and (min-width:1920px) {
+    .text {
+        -webkit-line-clamp: 2;
+    }
+    .text a {
+        -webkit-line-clamp: 2;
+    }
 }

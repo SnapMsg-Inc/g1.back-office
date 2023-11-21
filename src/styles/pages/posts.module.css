@@ -64,14 +64,14 @@
 }
 
 .postsContainer::-webkit-scrollbar-track {
-    background: #232E33;
+    background: white;
     border-radius: 10px;        
 }
 
 .postsContainer::-webkit-scrollbar-thumb {
-    background-color: #1ed760;    
+    background-color: #1f2a40;    
     border-radius: 10px;       
-    border: 1px solid #232E33
+    border: 1px solid white;
 }
 
 .searchBar {
@@ -89,7 +89,7 @@
 }
 
 .searchBar input {
-    width: 50%;
+    width: 90%;
     border: none;
     border-color: transparent;
     background-color: transparent;
@@ -109,4 +109,16 @@
     padding: 0;;
     align-self: center;
     font-size: 1.3vw;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 3vw;
+}
+
+.icon {
+    padding:3%;
 }

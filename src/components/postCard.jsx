@@ -1,15 +1,56 @@
 import { useNavigate } from 'react-router-dom'
 import styles from '../styles/components/postCard.module.css'
 import HashtagText from '../utils/hashtags'
+import { useContext, useEffect, useState } from 'react'
+import { AuthenticationContext } from '../auth/context/authenticationContext'
+import { GetToken, GetUsersByUid } from '../auth/service/userService'
+import { Spinner } from 'react-activity'
 
-export default function PostCard({post, user}) {
+export default function PostCard({post}) {
+    const { isAuthenticated } = useContext(AuthenticationContext)
+    const [isLoadingCard, setIsLoadingCard] = useState(false)
+    const [user, setUser] = useState({
+        "uid": "",
+        "alias": "",
+        "nick": "",
+        "followers": 0,
+        "follows": 0,
+        "interests": [],
+        "pic": ''
+    })
     const navigate = useNavigate()
     const handlePost = () => {
-        navigate(`/post/${post.pid}`)
+        navigate(`/post/${post.pid}`, { state: { user: user, post: post } })
     }
+
+    useEffect(() => {
+        const handleGetUserByUid = () => {
+            setIsLoadingCard(true)
+            GetToken()
+            .then((token) => {
+                GetUsersByUid(token, post.uid)
+                .then(response => 
+                    setUser(response.data[0])    
+                )
+                .catch(error =>
+                    console.log(error.response.status)
+                )
+                .finally(() => setIsLoadingCard(false))
+            })
+            .catch((error) => {})
+        }
+        if (isAuthenticated)
+            handleGetUserByUid()
+    },[isAuthenticated, post.uid])
 
     return (
         <li className={styles.postsItem}>
+            {isLoadingCard 
+            ? 
+            <div className={styles.loading}>
+                <Spinner />
+            </div>
+            :
             <div className={styles.post} onClick={() => handlePost()}>
                 <div className={styles.header}>
                     <div className={styles.cardImage}>
@@ -27,6 +68,7 @@ export default function PostCard({post, user}) {
                     <HashtagText text={post.text} isLink={false}/>
                 </div>
             </div>
+            }
         </li>
     )
 }

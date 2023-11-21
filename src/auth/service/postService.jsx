@@ -1,40 +1,36 @@
 import axios from "axios";
-import { getIdToken } from "firebase/auth";
-import { auth } from "../firebase";
 
-const URL = 'https://api-gateway-marioax.cloud.okteto.net/users'
+const URL = 'https://api-gateway-marioax.cloud.okteto.net/posts'
 
-export const GetToken = async () => await getIdToken(auth.currentUser, true)
-
-export const GetMe = async (token) =>
+export const GetPostByNick = async (token, nick) => 
     await axios.get(
-        `${URL}/me`,
-        {
-            headers: {
-                'Authorization' : `Bearer ${token}`,
-                'Content-Type' : 'application/json',
-            },
-        }
-    )
-
-export const GetUsers = async (token, page) =>
-    await axios.get(
-        `${URL}?limit=20&page=${page}`,
+        `${URL}?nick=${nick}&?limit=5&page=0`,
         {
             headers: {
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
             }
         }
-    )
+        )
         
-export const GetUsersByUid = async (token, uid) =>
+export const GetPosts = async (token, page) =>
     await axios.get(
-        `${URL}?uid=${uid}&limit=1&page=0`,
+        `${URL}?limit=16&page=${page}`,
         {
             headers: {
                 'Authorization' : `Bearer ${token}`,
                 'Content-Type' : 'application/json',
             }
-        }
+        }   
+    )
+    
+export const GetPostByText = async (token, text, page) =>
+    await axios.get(
+        `${URL}?text=${text}&limit=16&page=${page}`,
+        {
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type' : 'application/json',
+            }
+        }   
     )
