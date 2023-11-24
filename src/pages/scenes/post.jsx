@@ -7,10 +7,9 @@ import { useState } from 'react'
 export default function Post() {
     const navigate = useNavigate()
     const locationData = useLocation()
-    const { user, post } = locationData.state
+    const { user, post, trendings } = locationData.state
     const [isModalOpen, setIsModalOpen] = useState(false)
-
-
+    
     const handleBack = () => navigate(-1)
     console.log(locationData.state)
 
@@ -76,7 +75,19 @@ export default function Post() {
                 </div>
             </div>
             <div className={styles.trendings}>
-                <p>Trendings</p>
+                <div className={styles.titleTrendings}>
+                    <p>Trendings</p>
+                </div>
+                <div className={styles.trendingsInfo}>
+                    <div className={styles.trendingsItem}>
+                        {trendings.map((item, index) => (
+                        <>
+                            <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
+                            <p>{`Mentions ${item.mention_count}`}</p>
+                        </>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     )

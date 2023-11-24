@@ -6,11 +6,13 @@ import "react-activity/dist/Spinner.css";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { GoogleLogin } from "@react-oauth/google";
+import ForgotRequest from "../../components/forgotRequest";
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { onLogin, isLoading, onLoginFederate, isAuthenticated } = useContext(AuthenticationContext)
     const [isVisible, setIsVisible] = useState(false)
+    const [openDialog, setOpenDialog] = useState(false)
     const navigate = useNavigate()
 
     const handleViewPassword = () => setIsVisible(!isVisible)
@@ -26,12 +28,15 @@ export default function Login() {
         console.log(`email: ${formData.email} password: ${formData.password}`)
     }
 
-    useEffect(()=> 
+    const handleForgot = () => setOpenDialog(!openDialog) 
+
+    useEffect(()=> {
         isAuthenticated ? navigate('/') : navigate('#')
-    , [navigate, isAuthenticated])
+    }, [isAuthenticated, navigate])
 
     return (
         <div className={styles.container}>
+            {openDialog && <ForgotRequest handleModal={handleForgot}/>}
             <div className={styles.containerForm}>
                 <p className={styles.title}>
                     <strong>
@@ -65,12 +70,12 @@ export default function Login() {
                             onClick={handleViewPassword}
                             className={styles.icon}/>
                     </div>
-                    <div className={styles.forgotPassword}>
+                    <div className={styles.forgotPassword} onClick={() => handleForgot()}>
                         Forgot to password?
                     </div>
                     <div className={isLoading ? styles.spinner : styles.onSubmit}>
                         {isLoading ? 
-                            <Spinner color="#1ed760" size={10} speed={1} animating={true} /> 
+                            <Spinner color="#1f2a40" size={10} speed={1} animating={true} /> 
                             :    
                             <button 
                             className={styles.buttonSubmit} 

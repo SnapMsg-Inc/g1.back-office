@@ -1,17 +1,20 @@
 import { useContext, useEffect, useState } from 'react'
 import PostCard from '../../components/postCard'
 import styles from '../../styles/pages/posts.module.css'
-import users from '../../utils/data/user.json'
 import { Icon } from '@iconify/react'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 import { GetToken } from '../../auth/service/userService'
-import { GetPostByText, GetPosts } from '../../auth/service/postService'
+import { GetPostByText, GetPosts, GetTrendingsPost } from '../../auth/service/postService'
+import { Spinner } from 'react-activity'
 
 const INITIAL_PAGE = 0
 
 export default function Posts() {
     const [posts, setPosts] = useState([])
+    const [trendings, setTrendings] = useState([])
     const [page, setPage] = useState(INITIAL_PAGE)
+    const [loadingPage, setIsLoadingPage] = useState(false)
+    const [loadingTrending, setIsLoadingTrending] = useState(false)
     const [search, setSearch] = useState('')
     const { isAuthenticated } = useContext(AuthenticationContext)
 
@@ -26,7 +29,8 @@ export default function Posts() {
     }
     
     useEffect(() => {
-        const handleFetchPost = async () => {
+        const handleFetchPost = () => {
+            setIsLoadingPage(true)
             GetToken()
             .then(token => {
                 GetPosts(token, page)
@@ -36,12 +40,39 @@ export default function Posts() {
                 })
                 .catch(error => {
                     console.log(error.response.status)
+                    console.log(error.response)
                 })
             })
-            .catch(error => {})
+            .catch(error => {
+                console.log(error.reponse)
+                setIsLoadingPage(false)
+            })
         }
-        if (isAuthenticated)
+        const handleTrendings = () => {
+            setIsLoadingTrending(true)
+            GetToken()
+            .then(token => {
+                GetTrendingsPost(token)
+                .then(response => {
+                    console.log('trendings ',response.data)
+                    setTrendings(response.data)
+                    setIsLoadingTrending(false)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                    setIsLoadingTrending(false)
+                })
+                setIsLoadingPage(false)
+            })
+            .catch(error => {
+                console.log(error)
+                setIsLoadingTrending(false)
+            })
+        }
+        if (isAuthenticated) {
             handleFetchPost()
+            handleTrendings()
+        }
     }, [isAuthenticated, page])
 
     const handleChangeInput = (e) => {
@@ -85,13 +116,18 @@ export default function Posts() {
                         onClick={() => handleQuery()}/>
                 </div>
                 <div className={styles.postsContainer}>
-                    <ul className={styles.posts}>
-                        {posts.map((post) => (
-                            <PostCard key={post.pid} 
-                                post={post}
-                                user={users.find((user) => user.uid === post.uid)}/>
-                        ))}
-                    </ul>
+                    {posts.length === 0 && !loadingPage ?
+                        <div className={styles.notFound}>
+                            <p>Post not found</p> 
+                        </div>
+                        :
+                        <ul className={styles.posts}>
+                            {posts.map((post) => (
+                                <PostCard key={post.pid} 
+                                post={post} trendings={trendings}/>
+                            ))}
+                        </ul>
+                    }
                 </div>
                 <div className={styles.pagination}>
                     <Icon   className={styles.icon} 
@@ -104,7 +140,25 @@ export default function Posts() {
                 </div>
             </div>
             <div className={styles.trendings}>
-                <p>Trendings</p>
+                <div className={styles.titleTrendings}>
+                    <p>Trendings</p>
+                </div>
+                <div className={styles.trendingsInfo}>
+                    {loadingTrending ? 
+                    <div className={styles.containerLoading}>
+                        <Spinner className={styles.loading}/>
+                    </div>
+                    :
+                    <div className={styles.trendingsItem}>
+                        {trendings.map((item, index) => (
+                        <>
+                            <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
+                            <p>{`Mentions ${item.mention_count}`}</p>
+                        </>
+                        ))}
+                    </div>
+                    }
+                </div>
             </div>
         </div>
     )

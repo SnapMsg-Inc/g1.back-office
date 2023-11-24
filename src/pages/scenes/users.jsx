@@ -2,7 +2,7 @@ import styles from '../../styles/pages/users.module.css'
 import UserCard from '../../components/userCard'
 import { Icon } from '@iconify/react'
 import { useContext, useEffect, useState } from 'react'
-import { GetToken, GetUsers } from '../../auth/service/userService'
+import { GetToken, GetUserByNick, GetUsers } from '../../auth/service/userService'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 
 const INITIAL_PAGE = 0
@@ -11,6 +11,7 @@ export default function Users() {
     const { isAuthenticated } = useContext(AuthenticationContext)
     const [page, setPage] = useState(INITIAL_PAGE)
     const [users, setUsers] = useState([])
+    const [search, setSearch] = useState('')
 
     const handleNextPage = () => {
         if (users.length === 20)
@@ -21,7 +22,6 @@ export default function Users() {
         if ((page - 1) >= INITIAL_PAGE)
             setPage(page => page - 1)
     }
-
     
     useEffect(() => {
         const handleFetchUsers = async () => {
@@ -41,7 +41,27 @@ export default function Users() {
         }
         if (isAuthenticated)
             handleFetchUsers()
-    },[isAuthenticated, page, setPage])
+    }, [isAuthenticated, page])
+    
+    useEffect(() => {
+        const handleQuery = () => {
+            setPage(() => INITIAL_PAGE)
+            GetToken()
+            .then(token => {
+                GetUserByNick(token, search, page)
+                .then(response => {
+                    console.log('query ',response.data)
+                    setUsers(response.data)
+                })
+                .catch(error =>
+                    console.log(error.response)
+                )
+            })
+            .catch(error => console.log(error))
+        }
+        if (search.length >= 3 || search.length <= 1)    
+            handleQuery()
+    },[search, page])
 
     return (
         <div className={styles.container}>
@@ -52,8 +72,11 @@ export default function Users() {
                 <div className={styles.searchBar}>
                     <input 
                         type='search'
-                        placeholder='Search user'/>
-                    <Icon className={styles.search} icon="material-symbols:search" />
+                        placeholder='Search user'
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}/>
+                    <Icon className={styles.search} 
+                        icon="material-symbols:search"/>
                 </div>
                 <div className={styles.cardContainer}>
                     <ul className={styles.cards}>

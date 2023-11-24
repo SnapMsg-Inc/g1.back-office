@@ -80,7 +80,9 @@ export default function Me() {
                         <p>{user.interests.join(', ')}</p>
                     </div>
                     <div className={styles.btnAdmin}>
-                        <button className={styles.btnIsAdmin}>Admin</button>
+                        <button className={user.is_admin ? styles.btnIsAdmin : styles.btnNoAdmin}>
+                            Admin
+                        </button>
                     </div>
                 </div>
                 <div className={styles.metrics}>
@@ -105,13 +107,18 @@ export default function Me() {
                     <h2>Post User</h2>
                 </div>
                 <div className={styles.postsContainer}>
-                    <ul className={styles.posts}>
-                        {posts.map((post) => (
-                            <PostCard key={post.pid} 
-                                post={post}
-                                user={user}/>
-                        ))}
-                    </ul>
+                    {posts.length === 0 ?
+                        <div className={styles.notFound}>
+                            <p>Post not found</p> 
+                        </div>
+                        :
+                        <ul className={styles.posts}>
+                            {posts.map((post) => (
+                                <PostCard key={post.pid} 
+                                post={post}/>
+                            ))}
+                        </ul>
+                    }
                 </div>
             </div>
         </div>

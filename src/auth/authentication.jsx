@@ -1,5 +1,5 @@
 import { auth} from "./firebase";
-import { signInWithEmailAndPassword, signInWithCredential } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithCredential, sendPasswordResetEmail } from "firebase/auth";
 import { GoogleAuthProvider } from 'firebase/auth';
 
 export const LoginAccount = (email, password) =>
@@ -10,3 +10,6 @@ export const LogoutAccount = () =>
     
 export const LoginFederate = (credential) =>
     signInWithCredential(auth, GoogleAuthProvider.credential(credential))
+
+export const ResetPassword = (email) =>
+    sendPasswordResetEmail(auth, email)

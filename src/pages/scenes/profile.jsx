@@ -87,7 +87,7 @@ export default function Profile() {
                         <Icon className={styles.icon}
                                 icon="mdi:trash-can"
                                 onClick={() => handleDeleteUser()}/>
-                        <button className={styles.btnIsAdmin}
+                        <button className={styles.btnNoAdmin}
                             onClick={() => handleAdminUser()}>
                             Admin
                         </button>
@@ -115,13 +115,19 @@ export default function Profile() {
                     <h2>Post User</h2>
                 </div>
                 <div className={styles.postsContainer}>
-                    <ul className={styles.posts}>
-                        {posts.map((post) => (
-                            <PostCard key={post.pid} 
+                    {posts.length === 0 ?
+                        <div className={styles.notFound}>
+                            <p>Post not found</p> 
+                        </div>
+                        :
+                        <ul className={styles.posts}>
+                            {posts.map((post) => (
+                                <PostCard key={post.pid} 
                                 post={post}
                                 user={user}/>
-                        ))}
-                    </ul>
+                            ))}
+                        </ul>
+                    }
                 </div>
             </div>
         </div>

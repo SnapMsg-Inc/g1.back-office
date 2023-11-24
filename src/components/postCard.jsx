@@ -6,7 +6,7 @@ import { AuthenticationContext } from '../auth/context/authenticationContext'
 import { GetToken, GetUsersByUid } from '../auth/service/userService'
 import { Spinner } from 'react-activity'
 
-export default function PostCard({post}) {
+export default function PostCard({post, trendings}) {
     const { isAuthenticated } = useContext(AuthenticationContext)
     const [isLoadingCard, setIsLoadingCard] = useState(false)
     const [user, setUser] = useState({
@@ -20,7 +20,7 @@ export default function PostCard({post}) {
     })
     const navigate = useNavigate()
     const handlePost = () => {
-        navigate(`/post/${post.pid}`, { state: { user: user, post: post } })
+        navigate(`/post/${post.pid}`, { state: { user: user, post: post, trendings: trendings } })
     }
 
     useEffect(() => {

@@ -34,3 +34,16 @@ export const GetPostByText = async (token, text, page) =>
             }
         }   
     )
+
+const URL_TRENDINGS = 'https://api-gateway-marioax.cloud.okteto.net/trendings'
+
+export const GetTrendingsPost = async (token) =>
+    await axios.get(
+        `${URL_TRENDINGS}?limit=10&page=0`,
+        {
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type' : 'application/json',
+            }
+        } 
+    )

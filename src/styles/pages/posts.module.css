@@ -36,9 +36,8 @@
 .trendings {
     width: 18vw;
     background-color: #141B2D;
-    align-items: center;
-    justify-content: flex-end;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     color: white;
 }
@@ -121,4 +120,82 @@
 
 .icon {
     padding:3%;
+}
+
+.notFound {
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+
+.notFound p{
+    margin: 0;
+    padding: 0;
+}
+
+.loading {
+    font-size:40px;
+    color: white;
+}
+
+.trendingsInfo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding-left: 2%;
+}
+
+.trendingsInfo p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6vw;
+}
+
+.trendingsInfo span {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.containerLoading {
+    width: 100%;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.titleTrendings {
+    padding: 5%;
+}
+
+.titleTrendings p {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.trendingsItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-left: 2%;
+}
+
+.trendingsItem p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2vw;
+}
+
+.trendingsItem span {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6vw;
 }

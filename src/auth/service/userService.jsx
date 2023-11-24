@@ -37,4 +37,15 @@ export const GetUsersByUid = async (token, uid) =>
                 'Content-Type' : 'application/json',
             }
         }
+        )
+        
+export const GetUserByNick = async (token, search, page) =>
+    await axios.get(
+        `${URL}?nick=${search}&limit=20&page=${page}`,
+        {
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type' : 'application/json',
+            }
+        }
     )
