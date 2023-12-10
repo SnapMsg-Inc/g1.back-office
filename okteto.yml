@@ -10,10 +10,10 @@ deploy:
 
 dev:
   backoffice:
- #   command: npm run start
+    #command: ddtrace-run uvicorn src.main:app --host 0.0.0.0 --port 3001 --reload
     forward:
       - 8080:8080
-      - 3000:api-gateway.marioax:3000
+      - 3000:api-gateway:3000
     sync:
       - .:/usr/snapmsg-backoffice
 
