@@ -1,0 +1,19 @@
+name: g1.back-office
+
+build:
+  backoffice:
+    context: .
+
+deploy:
+   - helm upgrade --install backoffice chart
+     --set backoffice.image=${OKTETO_BUILD_BACKOFFICE_IMAGE}
+
+dev:
+  backoffice:
+    #command: ddtrace-run uvicorn src.main:app --host 0.0.0.0 --port 3001 --reload
+    forward:
+      - 8080:8080
+      - 3000:api-gateway:3000
+    sync:
+      - .:/usr/snapmsg-backoffice
+

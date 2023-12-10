@@ -1,0 +1,225 @@
+.container {
+    width: 78.7vw;
+    height: 100vh;
+    background-color: #1f2a40;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    margin-left: 2.6vw;
+    border-radius: 70px 0 0 70px;
+}
+
+.section {
+    width: 57vw;
+    height: 100vh;
+    padding-left: 3%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: flex-start;
+}
+
+.trendings {
+    width: 18vw;
+    background-color: #141B2D;
+    align-items: center;
+    justify-content: flex-end;
+    align-content: center;
+    overflow: hidden;
+    color: white;
+}
+
+.title {
+    font-size: 2vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 4%;
+    padding-left: 2%;
+}
+
+.title p {
+    margin: 0;
+    padding: 0;
+}
+
+.icon {
+    font-size: 2vw;
+}
+
+.post {
+    width: 36vw;
+    height: 74vh;
+    align-self: center;
+    margin: 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    color: #1f2a40;
+    border-radius: 50px;
+}
+
+.header {
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.imgProfile {
+    margin: 10px;
+}
+
+.imgProfile img {
+    width: 6.6vw;
+    height: 6.6vw;
+    border-radius: 50%;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.userInfo p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6vw;
+}
+
+.userInfo span {
+    font-size: 1.6vw;
+}
+
+.body {
+    width: 100%;
+    height: 80%;
+    color: #1f2a40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 2vw;
+    overflow: hidden;
+}
+
+.textPost {
+    font-size: 1.6vw;
+    width: 90%;
+}
+
+.mediaUri{
+    width: 90%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.mediaUri img {
+    width: 100%;
+    height: 100%;
+}
+
+.dialogImg {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dialogImg img {
+    width: 50vw;
+    height: 50vh;
+    max-width: 100%;
+}
+
+.closeDialog {
+    width: 70vw;
+    padding: 50px;
+}
+
+.iconClose {
+    color: white;
+    font-size: 30px;
+}
+
+.statistics {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+    align-self: center;
+}
+
+.statistics p {
+    margin: 0;
+    padding: 0;
+}
+
+.iconStats {
+    margin-right: 10px;
+}
+
+.titleTrendings {
+    padding: 5%;
+}
+
+.titleTrendings p {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.trendingsItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-left: 2%;
+}
+
+.trendingsItem p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2vw;
+}
+
+.trendingsItem span {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6vw;
+    font-weight: bold;
+}
+
+.trendingsInfo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding-left: 2%;
+}
+
+
+@media only screen and (min-width:1920px) {
+    .mediaUri {
+        height: 90%;
+    }
+}

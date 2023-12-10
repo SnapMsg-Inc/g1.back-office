@@ -1,0 +1,257 @@
+.container {
+    width: 78.7vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #1f2a40;
+    border-radius: 70px 0 0 70px;
+    margin-left: 2.6vw;
+    color: white;
+}
+
+.profile {
+    width: 55.2vw;
+}
+
+.postMe {
+    width: 21.2vw;
+    background-color: #141B2D;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+    color: white;
+}
+
+.banner {
+    width: 100%;
+    height: 26vh;
+    background: url("https://mobizent.net/wp-content/uploads/2018/04/Home-Four-Banner-Background-Image.png");
+    border-radius: 70px 0 0 0;
+}
+
+.info {
+    width: 20vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+    margin-top: -60px;
+}
+
+.containerInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.imgInfo {
+    padding-left: 15%;
+}
+
+.imgInfo img{
+    width: 100px;
+    height: 100px;
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.textInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-left: 5%;
+}
+
+.textInfo strong {
+    margin: 0 10px;
+}
+
+.textInfo h3 {
+    font-size: 1vw;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.textNick {
+    font-size: 1vw;
+    margin: 0;
+    padding: 0;
+    color: #687684;
+}
+
+.textInfo p {
+    font-size: 1vw;
+    margin: 0;
+    padding: 0;
+}
+
+.postsContainer {
+    width:100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    overflow-y: auto;
+}
+
+.postsContainer ul {
+    margin: 0;
+    padding: 0;
+}
+
+.posts {
+    height: 80vh;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.postsContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+.postsContainer::-webkit-scrollbar-track {
+    background: #232E33;
+    border-radius: 10px;        
+}
+
+.postsContainer::-webkit-scrollbar-thumb {
+    background-color: #1ed760;    
+    border-radius: 10px;       
+    border: 1px solid #232E33
+}
+
+.title {
+    padding-bottom: 10px;
+}
+
+.title h2{
+    margin: 0;
+    padding: 0;
+    padding: 5%;
+}
+
+.metrics {
+    width: 90%;
+    margin-top: 30px;
+    padding-left: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleMetrics {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.titleMetrics h3 {
+    margin: 0;
+    margin-right: 10px;
+    padding: 0;
+}
+
+.btnAdmin {
+    padding-right: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.btnIsAdmin {
+    width: 100px;
+    height: 30px;
+    color: #1f2a40;
+    font-size: 1vw;
+    font-weight: bold;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.btnNoAdmin {
+    width: 100px;
+    height: 30px;
+    color: white;
+    font-size: 1vw;
+    border: 1px solid white;
+    background-color: #1f2a40;
+    border-radius: 20px;
+}
+
+.metricsInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.metricsBox {
+    width: 15%;
+    height: 15vh;
+    border: 2px solid white;
+    border-radius: 20px;
+    font-size: 1vw;
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    font-size: 3vw;
+    margin: 3%;
+    align-self: flex-end;
+}
+
+@media only screen and (min-width: 1920px) {
+    .info {
+        margin-top: -100px;
+    }
+
+    .imgInfo img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .textInfo h3 {
+        font-size: 1.2vw;
+    }
+
+    .textInfo p {
+        font-size: 1.2vw;
+    }
+
+    .btnIsAdmin {
+        width: 150px;
+        height: 50px;
+        font-size: 1.2vw;
+    }
+
+    .btnNoAdmin {
+        width: 150px;
+        height: 50px;
+        font-size: 1.2vw;
+    }
+    
+    .titleMetrics {
+        font-size: 1.2vw;
+    }
+
+    .metricsBox {
+        height: 12vh;
+    }
+}

@@ -1,0 +1,35 @@
+.container {
+    width: 100%;
+    height: 85vh;
+    color: white;
+    background-image: url('https://media.product.which.co.uk/prod/images/1500_750/gm-bf924f18-377d-4517-bcd7-2b4e040bedd7-mobile-phone-providers.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+}
+
+.home {
+    width: 52vw;
+    height: 100%;
+    background-color: #1f2a40;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+    border-radius: 0 0 50% 0;
+    padding-left: 5%;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 5vw;
+    margin: 0;
+}
+
+.content {
+    font-size: 2vw;
+    margin: 0;
+}

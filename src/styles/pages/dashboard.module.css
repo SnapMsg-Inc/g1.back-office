@@ -1,0 +1,14 @@
+.container {
+    width: 78.7vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #1f2a40;
+    border-radius: 70px 0 0 70px;
+    margin-left: 2.6vw;
+    color: white;
+}
+
+.title {
+    color:#1ed760;
+}

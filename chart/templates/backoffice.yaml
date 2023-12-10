@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backoffice
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backoffice 
+spec:
+  replicas: 1
+  selector:
+    matchLabels: # service will match (forward) to pod under tagged `api`
+      app.kubernetes.io/name: backoffice 
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels: # same as .spec.selector.matchLabels
+        app.kubernetes.io/name: backoffice 
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: backoffice 
+        image: {{ .Values.backoffice.image }}
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+		
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backoffice 
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    name: http
+  selector: # labels to match pods
+    app.kubernetes.io/name: backoffice 
+    app.kubernetes.io/instance: {{ .Release.Name }}
+

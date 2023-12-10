@@ -1,0 +1,4 @@
+backoffice:
+  replicaCount: 1
+  image: okteto.dev/backoffice:okteto
+
