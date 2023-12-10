@@ -35,16 +35,14 @@ export default function Posts() {
             .then(token => {
                 GetPosts(token, page)
                 .then(response => {
-                    console.log(response.data)
                     setPosts(response.data)
                 })
                 .catch(error => {
-                    console.log(error.response.status)
-                    console.log(error.response)
+                    console.error('Error GetPosts in Posts Scene ',error.response.status)
                 })
             })
             .catch(error => {
-                console.log(error.reponse)
+                console.error(error.reponse)
                 setIsLoadingPage(false)
             })
         }
@@ -54,12 +52,11 @@ export default function Posts() {
             .then(token => {
                 GetTrendingsPost(token)
                 .then(response => {
-                    console.log('trendings ',response.data)
                     setTrendings(response.data)
                     setIsLoadingTrending(false)
                 })
                 .catch(error => {
-                    console.log(error.response)
+                    console.error('Error Trendings in Posts Scene ', error.response.status)
                     setIsLoadingTrending(false)
                 })
                 setIsLoadingPage(false)
@@ -92,7 +89,7 @@ export default function Posts() {
                 setPosts(response.data)
             })
             .catch(error =>
-                console.log(error.response)
+                console.error(error.response)
             )
         })
         .catch(error => console.log(error))
@@ -124,7 +121,7 @@ export default function Posts() {
                         <ul className={styles.posts}>
                             {posts.map((post) => (
                                 <PostCard key={post.pid} 
-                                post={post} trendings={trendings}/>
+                                    post={post}/>
                             ))}
                         </ul>
                     }
@@ -151,10 +148,10 @@ export default function Posts() {
                     :
                     <div className={styles.trendingsItem}>
                         {trendings.map((item, index) => (
-                        <>
+                        <div key={index}>
                             <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
                             <p>{`Mentions ${item.mention_count}`}</p>
-                        </>
+                        </div>
                         ))}
                     </div>
                     }

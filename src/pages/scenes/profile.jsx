@@ -21,11 +21,14 @@ export default function Profile() {
     })
     const [posts, setPosts] = useState([])
     const navigate = useNavigate()
+    const [isAdmin, setIsAdmin] = useState()
     // const user = users.find((u) => u.uid === uid)
     
     const handleBack = () => navigate(-1)
     const handleDeleteUser = () => console.log('User deleted')
-    const handleAdminUser = () => console.log('User is Admin')
+    const handleAdminUser = () => {
+        setIsAdmin(!isAdmin)
+    }
 
     useEffect(() => {
         const handleGetUserByUid = async () => {
@@ -123,8 +126,8 @@ export default function Profile() {
                         <ul className={styles.posts}>
                             {posts.map((post) => (
                                 <PostCard key={post.pid} 
-                                post={post}
-                                user={user}/>
+                                    post={post}
+                                    user={user}/>
                             ))}
                         </ul>
                     }

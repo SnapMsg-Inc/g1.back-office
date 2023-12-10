@@ -4,7 +4,7 @@ const URL = 'https://api-gateway-marioax.cloud.okteto.net/posts'
 
 export const GetPostByNick = async (token, nick) => 
     await axios.get(
-        `${URL}?nick=${nick}&?limit=5&page=0`,
+        `${URL}?nick=${nick}&limit=5&page=0`,
         {
             headers: {
                 'Authorization' : `Bearer ${token}`,
