@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 
 const URL = 'https://api-gateway-marioax.cloud.okteto.net/users'
 
-export const GetToken = async () => await getIdToken(auth.currentUser, true)
+export const GetToken = async () => await getIdToken(auth.currentUser, false)
 
 export const GetMe = async (token) =>
     await axios.get(
