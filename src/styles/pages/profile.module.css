@@ -1,0 +1,7 @@
+.container {
+    width: 78.7vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #e4e4e4;
+}

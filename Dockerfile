@@ -7,6 +7,7 @@ COPY package.json package.json
 RUN npm i
 
 COPY . .
+RUN chmod +x node_modules/.bin/react-scripts
 
 EXPOSE 8080
 
