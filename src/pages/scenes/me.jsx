@@ -19,6 +19,7 @@ export default function Me() {
         "followers": 0,
         "follows": 0,
         "is_admin": false,
+        "is_blocked": false,
         "ocupation": "",
         "pic": "",
         "email": "",
@@ -80,9 +81,16 @@ export default function Me() {
                         <p>{user.interests.join(', ')}</p>
                     </div>
                     <div className={styles.btnAdmin}>
-                        <button className={user.is_admin ? styles.btnIsAdmin : styles.btnNoAdmin}>
-                            Admin
-                        </button>
+                        <div className={styles.options}>
+                            <p>Block</p>
+                            <Icon className={ user.is_blocked ? styles.blocked: styles.notBlocked } 
+                                icon="bx:block" />
+                        </div>
+                        <div className={styles.options}>
+                            <p>Admin</p>
+                            <Icon className={ user.is_admin ? styles.isAdmin : styles.NotAdmin } 
+                                icon="eos-icons:admin-outlined"/>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.metrics}>

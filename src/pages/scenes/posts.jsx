@@ -15,9 +15,10 @@ export default function Posts() {
     const [page, setPage] = useState(INITIAL_PAGE)
     const [loadingPage, setIsLoadingPage] = useState(false)
     const [loadingTrending, setIsLoadingTrending] = useState(false)
+    const [error, setError] = useState(false)
     const [search, setSearch] = useState('')
     const { isAuthenticated } = useContext(AuthenticationContext)
-
+        
     const handleNextPage = () => {
         if (posts.length === 16)
             setPage(page => page + 1)
@@ -27,10 +28,11 @@ export default function Posts() {
         if ((page - 1) >= INITIAL_PAGE)
             setPage(page => page - 1)
     }
-    
+
     useEffect(() => {
         const handleFetchPost = () => {
             setIsLoadingPage(true)
+            setError(false)
             GetToken()
             .then(token => {
                 GetPosts(token, page)
@@ -38,16 +40,19 @@ export default function Posts() {
                     setPosts(response.data)
                 })
                 .catch(error => {
-                    console.error('Error GetPosts in Posts Scene ',error.response.status)
+                    console.error('Error GetPosts in Posts Scene ',error.response)
+                    setError(true)
                 })
             })
             .catch(error => {
-                console.error(error.reponse)
+                console.error('Error token', error)
+                setError(true)
                 setIsLoadingPage(false)
             })
         }
         const handleTrendings = () => {
             setIsLoadingTrending(true)
+            setError(false)
             GetToken()
             .then(token => {
                 GetTrendingsPost(token)
@@ -56,14 +61,16 @@ export default function Posts() {
                     setIsLoadingTrending(false)
                 })
                 .catch(error => {
-                    console.error('Error Trendings in Posts Scene ', error.response.status)
+                    console.error('Error Trendings in Posts Scene ', error?.response?.status)
                     setIsLoadingTrending(false)
+                    setError(true)
                 })
                 setIsLoadingPage(false)
             })
             .catch(error => {
-                console.log(error)
+                console.error('Error token',error)
                 setIsLoadingTrending(false)
+                setError(true)   
             })
         }
         if (isAuthenticated) {
@@ -85,12 +92,9 @@ export default function Posts() {
         .then(token => {
             GetPostByText(token, search, page)
             .then(response => {
-                console.log('query ',response.data)
                 setPosts(response.data)
             })
-            .catch(error =>
-                console.error(error.response)
-            )
+            .catch(error => console.error(error.response.status))
         })
         .catch(error => console.log(error))
     }
@@ -113,16 +117,23 @@ export default function Posts() {
                         onClick={() => handleQuery()}/>
                 </div>
                 <div className={styles.postsContainer}>
-                    {posts.length === 0 && !loadingPage ?
-                        <div className={styles.notFound}>
-                            <p>Post not found</p> 
+                    {loadingPage ?
+                        <div className={styles.containerLoading}>
+                            <Spinner className={styles.loading} size={40}/>
                         </div>
                         :
+                        error ? 
+                        <div className={styles.errorPost}>
+                            <Icon icon="bx:error" className={styles.iconError}/>
+                            <p>An error has ocurred.</p>
+                            <p>Please try again later</p>
+                        </div> 
+                        :
                         <ul className={styles.posts}>
-                            {posts.map((post) => (
+                            {posts.map((post) => 
                                 <PostCard key={post.pid} 
                                     post={post}/>
-                            ))}
+                            )}
                         </ul>
                     }
                 </div>
@@ -142,18 +153,25 @@ export default function Posts() {
                 </div>
                 <div className={styles.trendingsInfo}>
                     {loadingTrending ? 
-                    <div className={styles.containerLoading}>
-                        <Spinner className={styles.loading}/>
-                    </div>
-                    :
-                    <div className={styles.trendingsItem}>
-                        {trendings.map((item, index) => (
-                        <div key={index}>
-                            <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
-                            <p>{`Mentions ${item.mention_count}`}</p>
+                        <div className={styles.containerLoading}>
+                            <Spinner className={styles.loading}/>
                         </div>
-                        ))}
-                    </div>
+                        :
+                        error ? 
+                            <div className={styles.error}>
+                                <Icon icon="bx:error" className={styles.iconError}/>
+                                <p>An error has ocurred.</p>
+                                <p>Please try again later</p>
+                            </div> 
+                            :
+                            <div className={styles.trendingsItem}>
+                                {trendings.map((item, index) => (
+                                <div key={index}>
+                                    <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
+                                    <p>{`Mentions ${item.mention_count}`}</p>
+                                </div>
+                                ))}
+                            </div>
                     }
                 </div>
             </div>

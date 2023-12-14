@@ -73,6 +73,8 @@
 }
 
 .textInfo h3 {
+    display: flex;
+    flex-direction: row;
     font-size: 1vw;
     font-weight: bold;
     margin: 0;
@@ -87,6 +89,8 @@
 }
 
 .textInfo p {
+    display: flex;
+    align-items: center;
     font-size: 1vw;
     margin: 0;
     padding: 0;
@@ -165,9 +169,11 @@
 }
 
 .btnAdmin {
+    width: 20%;
     padding-right: 5%;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
 }
 
 .btnIsAdmin {
@@ -188,7 +194,7 @@
     font-size: 1vw;
     border: 1px solid white;
     background-color: #1f2a40;
-    border-radius: 20px;
+    border-radius: 20px
 }
 
 .metricsInfo{
@@ -214,6 +220,36 @@
     font-size: 3vw;
     margin: 3%;
     align-self: flex-end;
+}
+
+.isAdmin {
+    font-size: 2.5vw;
+    color: green
+}
+
+.NotAdmin {
+    font-size: 2.5vw;
+    color: red
+}
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options p {
+    padding-right: 5px;
+}
+
+.notBlocked {
+    font-size: 3vw;
+    color: green;
+}
+
+.blocked {
+    font-size: 3vw;
+    color: red
 }
 
 @media only screen and (min-width: 1920px) {

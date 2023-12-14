@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'https://api-gateway-marioax.cloud.okteto.net/posts'
+const URL = 'https://gateway-api-api-gateway-marioax.cloud.okteto.net/admin/posts'
 
 export const GetPostByNick = async (token, nick) => 
     await axios.get(
@@ -11,7 +11,18 @@ export const GetPostByNick = async (token, nick) =>
                 'Content-Type' : 'application/json',
             }
         }
-        )
+    )
+
+export const GetPostNick = async (token, nick) => 
+    await axios.get(
+        `${URL}?nick=${nick}&limit=16&page=0`,
+        {
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type' : 'application/json',
+            }
+        }
+    )
         
 export const GetPosts = async (token, page) =>
     await axios.get(
@@ -35,7 +46,7 @@ export const GetPostByText = async (token, text, page) =>
         }   
     )
 
-const URL_TRENDINGS = 'https://api-gateway-marioax.cloud.okteto.net/trendings'
+const URL_TRENDINGS = 'https://gateway-api-api-gateway-marioax.cloud.okteto.net/trendings'
 
 export const GetTrendingsPost = async (token) =>
     await axios.get(

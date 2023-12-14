@@ -23,18 +23,19 @@ export default function PostCard({post}) {
     const handlePost = () => {
         navigate(`/post/${post.pid}`, { state: { user: user, post: post } })
     }
-
+    
     useEffect(() => {
         const handleGetUserByUid = () => {
-            const userLocal = localStorage.getItem(post.uid)
+            const userLocal = localStorage.getItem(post.post ? post.post.uid : post.uid)
             setIsLoadingCard(true)
             if (userLocal === null) {
                 GetToken()
                 .then((token) => {
                     GetUsersByUid(token, post.uid)
                     .then(response => {
-                        setUser(response.data[0])
-                        localStorage.setItem(post.uid, JSON.stringify(response.data[0]))    
+                        setUser(response.data)
+                        console.log(response.data)
+                        localStorage.setItem(post.uid, JSON.stringify(response.data))    
                     })
                     .catch(error =>
                         console.error('Error in GetUserByUid in PostCard ',error.response.status)
@@ -49,7 +50,7 @@ export default function PostCard({post}) {
         }
         if (isAuthenticated)
             handleGetUserByUid()
-    },[isAuthenticated, post.uid])
+    },[isAuthenticated, post.uid, post.post])
 
     return (
         <li className={styles.postsItem}>
@@ -60,6 +61,12 @@ export default function PostCard({post}) {
             </div>
             :
             <div className={styles.post} onClick={() => handlePost()}>
+                {post.post &&
+                    <div className={styles.snapShare} >
+                        <Icon icon="la:retweet"/>
+                        <p>This Snap was Snapshare</p>
+                    </div> 
+                }
                 <div className={styles.header}>
                     <div className={styles.cardImage}>
                         <img src={user.pic} alt={user.alias} sizes={20}/>
@@ -78,7 +85,7 @@ export default function PostCard({post}) {
                     </div>
                 </div>
                 <div className={styles.contentPost}>
-                    <HashtagText text={post.text} isLink={false}/>
+                    <HashtagText text={post.post ? post.post.text : post.text} isLink={false}/>
                 </div>
             </div>
             }

@@ -4,6 +4,8 @@ import { Icon } from '@iconify/react'
 import { useContext, useEffect, useState } from 'react'
 import { GetToken, GetUserByNick, GetUsers } from '../../auth/service/userService'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
+// import { useNavigate } from 'react-router-dom'
+import { Spinner } from 'react-activity'
 
 const INITIAL_PAGE = 0
 
@@ -12,6 +14,9 @@ export default function Users() {
     const [page, setPage] = useState(INITIAL_PAGE)
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState('')
+    const [error, setError] = useState(false)
+    const [isLoadingPage, setIsLoadingPage] = useState(false)
+    // const navigate = useNavigate()
 
     const handleNextPage = () => {
         if (users.length === 20)
@@ -25,25 +30,25 @@ export default function Users() {
     
     useEffect(() => {
         const handleFetchUsers = async () => {
+            setIsLoadingPage(true)
+            setError(false)
             GetToken()
             .then((token) => {
                 GetUsers(token, page)
                 .then(response => {
                     setUsers(response.data)
+                    setIsLoadingPage(false)
                 })
                 .catch(error => {
                     console.log('Error get users', error.response)
+                    setIsLoadingPage(false)
+                    setError(true)
                 })
             })
             .catch(error => 
                 console.log('Error en users', error)
             )
         }
-        if (isAuthenticated)
-            handleFetchUsers()
-    }, [isAuthenticated, page])
-    
-    useEffect(() => {
         const handleQuery = () => {
             setPage(() => INITIAL_PAGE)
             GetToken()
@@ -59,9 +64,17 @@ export default function Users() {
             })
             .catch(error => console.log(error))
         }
-        if (search.length >= 3 || search.length <= 1)    
-            handleQuery()
-    },[search, page])
+        if (search.length !== 0) {
+            if (search.length >= 3 || search.length <= 1)    
+                handleQuery()
+        }
+        if (isAuthenticated) {
+            handleFetchUsers()
+        }
+    }, [isAuthenticated, search, page])
+    
+    // useEffect(() => {
+    // },[search, page])
 
     return (
         <div className={styles.container}>
@@ -79,11 +92,24 @@ export default function Users() {
                         icon="material-symbols:search"/>
                 </div>
                 <div className={styles.cardContainer}>
-                    <ul className={styles.cards}>
-                        {users.map((user) => (
-                            <UserCard key={user.uid} user={user} />
-                        ))}
-                    </ul>
+                    {isLoadingPage ? 
+                        <div className={styles.containerLoading}>
+                            <Spinner className={styles.loading}/>
+                        </div>
+                        : 
+                        error ?
+                        <div className={styles.error}>
+                            <Icon icon="bx:error" className={styles.iconError}/>
+                            <p>An error has ocurred.</p>
+                            <p>Please try again later</p>
+                        </div> 
+                        :
+                        <ul className={styles.cards}>
+                            {users.map((user) => (
+                                <UserCard key={user.uid} user={user} />
+                            ))}
+                        </ul>
+                    }
                 </div>
                 <div className={styles.pagination}>
                     <Icon   className={styles.icon} 

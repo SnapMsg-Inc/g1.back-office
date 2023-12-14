@@ -26,11 +26,9 @@ export default function Post() {
     }
 
     const handleBlockPost = async () => {
-        setIsBlock(!isBlock)
-        console.log('block',isBlock)
         await GetToken()
         .then(async token => {
-            if (isBlock) {
+            if (!isBlock) {
                 await BlockPost(token, post.pid)
                 .then(response => console.log('Block Post ', response.status))
                 .catch(error => console.error('Error in block post ', error.response.status))
@@ -40,6 +38,7 @@ export default function Post() {
                 .catch(error => console.error('Error in Unblock post ', error.response.status))
             }
         })
+        setIsBlock(!isBlock)
     }
 
     useEffect(() => {
