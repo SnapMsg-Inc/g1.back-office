@@ -19,7 +19,7 @@ export default function Dashboard() {
                             <div className={styles.containerFrame}>
                                 <iframe className={styles.frame}
                                     title='Users'
-                                    src='https://p.us5.datadoghq.com/sb/9259dfd8-4e68-11ee-b05c-da7ad0900005-de0474842a3324b348276418ef95f96b?theme=dark'
+                                    src='https://p.us5.datadoghq.com/sb/9259dfd8-4e68-11ee-b05c-da7ad0900005-08c4e3fca03bb04654c406893c639e0f?theme=dark'
                                 />                            
                             </div>
                         </TabPanel>

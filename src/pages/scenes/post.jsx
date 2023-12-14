@@ -63,7 +63,7 @@ export default function Post() {
         }
         if (isAuthenticated)
             handleTrendings()
-    }, [isAuthenticated])
+    }, [isAuthenticated, post])
 
     return (
         <div className={styles.container}>
@@ -89,6 +89,12 @@ export default function Post() {
                     <p>Post</p>
                 </div>
                 <div className={styles.post}>
+                    {post.post &&
+                        <div className={styles.snapShare} >
+                            <Icon icon="la:retweet"/>
+                            <p>This Snap was Snapshare</p>
+                        </div> 
+                    }
                     <div className={styles.header}>
                         <div className={styles.imgProfile}>
                             <img src={user.pic} alt={user.alias}/>
@@ -99,17 +105,17 @@ export default function Post() {
                             <span>{post.timestamp.slice(0,10)}</span>
                         </div>
                         <div className={styles.blockPost}>
-                            <Icon   className={isBlock ? styles.iconBlock : styles.icon } 
+                            <Icon   className={isBlock ? styles.iconBlock : styles.iconNoBlock } 
                                     icon={post.is_blocked ? "mdi:message-off" : "mdi:message"}
                                     onClick={handleBlockPost}/>
                         </div>
                     </div>
                     <div className={styles.body}>
                         <div className={styles.textPost}>
-                            <HashtagText text={post.text} isLink={true}/>
+                            <HashtagText text={post.post ? post.post.text : post.text} isLink={true}/>
                         </div>
                         {
-                            post.media_uri.length > 0 ? 
+                            ('post' in post ? post.post.media_uri.lenght > 0 : post.media_uri.length > 0) ? 
                             <div className={styles.mediaUri} onClick={() => handleModal()}>
                                 <img src={post.media_uri[0]} alt={user.alias}/> 
                             </div>
@@ -141,7 +147,7 @@ export default function Post() {
                         {trendings.map((item, index) => (
                         <div key={index}>
                             <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
-                            <p>{`Mentions ${item.mention_count}`}</p>
+                            <p>{`Mentions: ${item.mention_count}`}</p>
                         </div>
                         ))}
                     </div>
