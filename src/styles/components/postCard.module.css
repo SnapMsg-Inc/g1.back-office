@@ -17,19 +17,20 @@
 .header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding-left: 5px;
     padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .cardImage img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
 .cardContent {
-    flex: 1;
+    width: 50%;
 }
 
 .content {
@@ -38,18 +39,18 @@
 
 .content h2 {
     margin: 0;
-    font-size: 14px;
+    font-size: 10px;
     color: #1f2a40;
 }
 
 .content p {
     margin: 0;
-    font-size: 12px;
+    font-size: 10px;
     color: #687684;
 }
 
 .content span {
-    font-size: 12px;
+    font-size: 10px;
     color: #687684;
 }
 
@@ -66,6 +67,29 @@
     font-size: 30px;
     justify-content: center;
     align-items: center;
+}
+
+.icon {
+    font-size: 1vw;
+    color: green;
+}
+
+.iconBlock {
+    font-size: 1vw;
+    color:red
+}
+
+.snapShare {
+    padding-left: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 10px;
+}
+
+.snapShare p {
+    margin: 0;
+    padding: 0;
 }
 
 @media only screen and (min-width:1920px) {

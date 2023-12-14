@@ -27,7 +27,9 @@
 }
 
 .content {
+    width: 50%;
     padding: 10px;
+    padding-left: 2px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,27 +38,27 @@
 }
 
 .content h2{
-    font-size: .8vw;
+    font-size: .7vw;
     margin: 0;
     padding: 0;
 }
 
 .content p {
-    font-size: .8vw;
+    font-size: .7vw;
     margin: 0;
     padding: 0;
 }
 
 .cardImage {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     padding: 5px;
 }
 
 .cardImage img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -88,6 +90,33 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+
+.contentPermission {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notBlocked {
+    font-size: 1vw;
+    color: green;
+}
+
+.blocked {
+    font-size: 1vw;
+    color: red
+}
+
+.isAdmin {
+    font-size: 1vw;
+    color: green;
+}
+
+.NotAdmin {
+    font-size: 1vw;
+    color: red
+}
+
 
 @media only screen and (min-width:1920px) {
     .card {

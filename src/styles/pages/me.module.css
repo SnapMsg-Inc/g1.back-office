@@ -15,6 +15,7 @@
 
 .postMe {
     width: 21.2vw;
+    height: 100vh;
     background-color: #141B2D;
     align-items: center;
     justify-content: center;
@@ -72,6 +73,8 @@
 }
 
 .textInfo h3 {
+    display: flex;
+    flex-direction: row;
     font-size: 1vw;
     font-weight: bold;
     margin: 0;
@@ -86,6 +89,8 @@
 }
 
 .textInfo p {
+    display: flex;
+    align-items: center;
     font-size: 1vw;
     margin: 0;
     padding: 0;
@@ -94,11 +99,9 @@
 .postsContainer {
     width:100%;
     height: 85vh;
+    max-height: 85vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    align-content: center;
     overflow-y: auto;
 }
 
@@ -108,27 +111,27 @@
 }
 
 .posts {
-    height: 80vh;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 2%;
+    display: grid;
+    grid-template-columns: minmax(23%, 1fr);
+    gap: 1%;
+    margin: 0;
+    padding: 0;
 }
-
 
 .postsContainer::-webkit-scrollbar {
     width: 10px;
 }
 
 .postsContainer::-webkit-scrollbar-track {
-    background: #232E33;
+    background: white;
     border-radius: 10px;        
 }
 
 .postsContainer::-webkit-scrollbar-thumb {
-    background-color: #1ed760;    
+    background-color: #1f2a40;    
     border-radius: 10px;       
-    border: 1px solid #232E33
+    border: 1px solid white;
 }
 
 .title {
@@ -166,9 +169,11 @@
 }
 
 .btnAdmin {
+    width: 20%;
     padding-right: 5%;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
 }
 
 .btnIsAdmin {
@@ -189,7 +194,7 @@
     font-size: 1vw;
     border: 1px solid white;
     background-color: #1f2a40;
-    border-radius: 20px;
+    border-radius: 20px
 }
 
 .metricsInfo{
@@ -215,6 +220,36 @@
     font-size: 3vw;
     margin: 3%;
     align-self: flex-end;
+}
+
+.isAdmin {
+    font-size: 2.5vw;
+    color: green
+}
+
+.NotAdmin {
+    font-size: 2.5vw;
+    color: red
+}
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options p {
+    padding-right: 5px;
+}
+
+.notBlocked {
+    font-size: 3vw;
+    color: green;
+}
+
+.blocked {
+    font-size: 3vw;
+    color: red
 }
 
 @media only screen and (min-width: 1920px) {
@@ -253,5 +288,9 @@
 
     .metricsBox {
         height: 12vh;
+    }
+
+    .postsContainer {
+        max-height: 100vh;
     }
 }

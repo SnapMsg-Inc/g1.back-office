@@ -5,8 +5,9 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthenticationContext } from '../auth/context/authenticationContext'
 import { GetToken, GetUsersByUid } from '../auth/service/userService'
 import { Spinner } from 'react-activity'
+import { Icon } from '@iconify/react'
 
-export default function PostCard({post, trendings}) {
+export default function PostCard({post}) {
     const { isAuthenticated } = useContext(AuthenticationContext)
     const [isLoadingCard, setIsLoadingCard] = useState(false)
     const [user, setUser] = useState({
@@ -20,28 +21,36 @@ export default function PostCard({post, trendings}) {
     })
     const navigate = useNavigate()
     const handlePost = () => {
-        navigate(`/post/${post.pid}`, { state: { user: user, post: post, trendings: trendings } })
+        navigate(`/post/${post.pid}`, { state: { user: user, post: post } })
     }
-
+    
     useEffect(() => {
         const handleGetUserByUid = () => {
+            const userLocal = localStorage.getItem(post.post ? post.post.uid : post.uid)
             setIsLoadingCard(true)
-            GetToken()
-            .then((token) => {
-                GetUsersByUid(token, post.uid)
-                .then(response => 
-                    setUser(response.data[0])    
-                )
-                .catch(error =>
-                    console.log(error.response.status)
-                )
-                .finally(() => setIsLoadingCard(false))
-            })
-            .catch((error) => {})
+            if (userLocal === null) {
+                GetToken()
+                .then((token) => {
+                    GetUsersByUid(token, post.uid)
+                    .then(response => {
+                        setUser(response.data)
+                        console.log(response.data)
+                        localStorage.setItem(post.uid, JSON.stringify(response.data))    
+                    })
+                    .catch(error =>
+                        console.error('Error in GetUserByUid in PostCard ',error.response.status)
+                    )
+                    .finally(() => setIsLoadingCard(false))
+                })
+                .catch((error) => {})
+            } else {
+                setUser(JSON.parse(userLocal))
+                setIsLoadingCard(false)
+            }
         }
         if (isAuthenticated)
             handleGetUserByUid()
-    },[isAuthenticated, post.uid])
+    },[isAuthenticated, post.uid, post.post])
 
     return (
         <li className={styles.postsItem}>
@@ -52,6 +61,12 @@ export default function PostCard({post, trendings}) {
             </div>
             :
             <div className={styles.post} onClick={() => handlePost()}>
+                {post.post &&
+                    <div className={styles.snapShare} >
+                        <Icon icon="la:retweet"/>
+                        <p>This Snap was Snapshare</p>
+                    </div> 
+                }
                 <div className={styles.header}>
                     <div className={styles.cardImage}>
                         <img src={user.pic} alt={user.alias} sizes={20}/>
@@ -63,9 +78,14 @@ export default function PostCard({post, trendings}) {
                             <span>{post.timestamp.slice(0,10)}</span>
                         </div>
                     </div>
+                    <div>
+                        <Icon className={post.is_blocked ? styles.iconBlock : styles.icon } 
+                            icon={post.is_blocked ? "mdi:message-off" : "mdi:message"}
+                        />
+                    </div>
                 </div>
                 <div className={styles.contentPost}>
-                    <HashtagText text={post.text} isLink={false}/>
+                    <HashtagText text={post.post ? post.post.text : post.text} isLink={false}/>
                 </div>
             </div>
             }
