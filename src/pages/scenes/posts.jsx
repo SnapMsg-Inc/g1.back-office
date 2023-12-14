@@ -35,7 +35,6 @@ export default function Posts() {
             setError(false)
             GetToken()
             .then(token => {
-                console.log(token)
                 GetPosts(token, page)
                 .then(response => {
                     setPosts(response.data)

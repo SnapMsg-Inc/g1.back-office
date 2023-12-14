@@ -15,7 +15,7 @@ export default function Post() {
     const { user, post } = locationData.state
     const { isAuthenticated } = useContext(AuthenticationContext)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isBlock, setIsBlock] = useState(post.is_blocked)
+    const [isBlock, setIsBlock] = useState(post.post ? post.post.is_blocked : post.is_blocked)
     const [trendings, setTrendings] = useState([])
     const [loadingTrending, setIsLoadingTrending] = useState(false)
 
@@ -29,11 +29,11 @@ export default function Post() {
         await GetToken()
         .then(async token => {
             if (!isBlock) {
-                await BlockPost(token, post.pid)
+                await BlockPost(token, post.post ? post.post.pid : post.pid)
                 .then(response => console.log('Block Post ', response.status))
                 .catch(error => console.error('Error in block post ', error.response.status))
             } else {
-                await UnblockPost(token, post.pid)    
+                await UnblockPost(token, post.post ? post.post.pid : post.pid)    
                 .then(response => console.log('Unblock Post ', response.status))
                 .catch(error => console.error('Error in Unblock post ', error.response.status))
             }
@@ -52,7 +52,7 @@ export default function Post() {
                     setIsLoadingTrending(false)
                 })
                 .catch(error => {
-                    console.log(error.response)
+                    console.log(error?.response?.status)
                     setIsLoadingTrending(false)
                 })
             })
@@ -106,8 +106,8 @@ export default function Post() {
                         </div>
                         <div className={styles.blockPost}>
                             <Icon   className={isBlock ? styles.iconBlock : styles.iconNoBlock } 
-                                    icon={post.is_blocked ? "mdi:message-off" : "mdi:message"}
-                                    onClick={handleBlockPost}/>
+                                icon={isBlock ? "mdi:message-off" : "mdi:message"}
+                                onClick={handleBlockPost}/>
                         </div>
                     </div>
                     <div className={styles.body}>
@@ -123,10 +123,10 @@ export default function Post() {
                              <></>
                         }
                         <div className={styles.statistics}>
-                            <p>{post.snapshares}</p>
+                            <p>{post.post ? post.post.snapshares: post.snapshares}</p>
                             <Icon className={styles.iconStats} 
                                 icon="la:retweet"/>
-                            <p>{post.likes}</p>
+                            <p>{post.post ? post.post.snapshares:post.likes}</p>
                             <Icon className={styles.iconStats}
                                 icon="icon-park-solid:like"/>
                         </div>

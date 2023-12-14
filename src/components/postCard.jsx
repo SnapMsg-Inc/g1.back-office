@@ -34,7 +34,6 @@ export default function PostCard({post}) {
                     GetUsersByUid(token, post.uid)
                     .then(response => {
                         setUser(response.data)
-                        console.log(response.data)
                         localStorage.setItem(post.uid, JSON.stringify(response.data))    
                     })
                     .catch(error =>
@@ -79,8 +78,8 @@ export default function PostCard({post}) {
                         </div>
                     </div>
                     <div>
-                        <Icon className={post.is_blocked ? styles.iconBlock : styles.icon } 
-                            icon={post.is_blocked ? "mdi:message-off" : "mdi:message"}
+                        <Icon className={(post.post ? post.post.is_blocked : post.is_blocked) ? styles.iconBlock : styles.icon } 
+                            icon={(post.post ? post.post.is_blocked : post.is_blocked) ? "mdi:message-off" : "mdi:message"}
                         />
                     </div>
                 </div>

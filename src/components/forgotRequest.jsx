@@ -10,7 +10,6 @@ export default function ForgotRequest({handleModal}) {
     
     const handleSubmit = () => {
         setIsLoading(true)
-        console.log('pruebva')
         ResetPassword(email)
         .then(() => {
             handleModal()

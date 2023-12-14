@@ -47,12 +47,10 @@ export const AuthenticationContextProvider = ({children}) => {
             .then((token) => {
                 GetMe(token)
                 .then((response) => {
-                    console.log(response.data)
                     if (response.data.is_admin !== true) {
                         alert('Permission denied')
                         onLogout()
                     } else {
-                        console.log(token)
                         dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
                         setPermission(true)
                         handleNavigate('/users')
@@ -87,13 +85,10 @@ export const AuthenticationContextProvider = ({children}) => {
         setPermission(false)
         LoginFederate(credential)
         .then((userCredential) => {
-            const { uid } = userCredential.user
-            console.log(uid)
             GetToken()
             .then((token) => {
                 GetMe(token)
                 .then((response) => {
-                    console.log(response.data)
                     if (response.data.is_admin !== true) {
                         alert('Permission denied')
                         onLogout()
