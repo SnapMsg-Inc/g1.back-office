@@ -230,6 +230,11 @@
     color: red;
 }
 
+.iconNoBlock {
+    font-size: 2vw;
+    color: green;
+}
+
 .containerLoading {
     width: 100%;
     display: flex;

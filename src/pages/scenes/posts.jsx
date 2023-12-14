@@ -35,6 +35,7 @@ export default function Posts() {
             setError(false)
             GetToken()
             .then(token => {
+                console.log(token)
                 GetPosts(token, page)
                 .then(response => {
                     setPosts(response.data)
@@ -168,7 +169,7 @@ export default function Posts() {
                                 {trendings.map((item, index) => (
                                 <div key={index}>
                                     <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
-                                    <p>{`Mentions ${item.mention_count}`}</p>
+                                    <p>{`Mentions: ${item.mention_count}`}</p>
                                 </div>
                                 ))}
                             </div>

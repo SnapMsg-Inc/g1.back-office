@@ -105,7 +105,7 @@ export default function Post() {
                             <span>{post.timestamp.slice(0,10)}</span>
                         </div>
                         <div className={styles.blockPost}>
-                            <Icon   className={isBlock ? styles.iconBlock : styles.icon } 
+                            <Icon   className={isBlock ? styles.iconBlock : styles.iconNoBlock } 
                                     icon={post.is_blocked ? "mdi:message-off" : "mdi:message"}
                                     onClick={handleBlockPost}/>
                         </div>
@@ -147,7 +147,7 @@ export default function Post() {
                         {trendings.map((item, index) => (
                         <div key={index}>
                             <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
-                            <p>{`Mentions ${item.mention_count}`}</p>
+                            <p>{`Mentions: ${item.mention_count}`}</p>
                         </div>
                         ))}
                     </div>

@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from 'react'
 import { GetMe, GetToken } from '../../auth/service/userService'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 import { GetPostByNick } from '../../auth/service/postService'
+import { GetStatsByUid } from '../../auth/service/adminService'
 
 export default function Me() {
     const { isAuthenticated } = useContext(AuthenticationContext)
@@ -28,6 +29,7 @@ export default function Me() {
         "birthdate": ""
     })
     const [posts, setPosts] = useState([])
+    const [stats, setStats] = useState({})
 
     useEffect(() => {
         const handleFetchMe = async () => {
@@ -43,6 +45,26 @@ export default function Me() {
             })
             .catch(error => {})
         }
+
+        const handleGetStatsPostByUid = () => {
+            GetToken()
+            .then(token => {
+                let date = new Date()
+                const end = new Date(date);
+                end.setDate(date.getDate() + 1)
+                GetStatsByUid(user.uid,{
+                    start:'2023-12-01',
+                    end: end.toISOString().split('T')[0]
+                }, token)
+                .then(response => {
+                    console.log('stats', response.data)
+                    setStats(response.data)
+                })
+                .catch(error => console.log('Error in stats profile', error?.response?.status))
+            })
+            .catch(error => console.log('Error in token', error))
+        }
+
         const handleGetPostUserByNick = async () => {
             GetToken()
             .then(token => {
@@ -58,9 +80,11 @@ export default function Me() {
         }
         if (isAuthenticated)
             handleFetchMe()
-        if (user.nick)
+        if (user.nick) {
+            handleGetStatsPostByUid()
             handleGetPostUserByNick()
-    }, [isAuthenticated, user.nick])
+        }
+    }, [isAuthenticated, user.nick, user.uid])
 
     return (
         <div className={styles.container}>
@@ -77,6 +101,8 @@ export default function Me() {
                         <h3>{user.alias}</h3>
                         <p className={styles.textNick}>@{user.nick}</p>
                         <p>{user.interests.join(', ')}</p>
+                        <p><Icon icon='mingcute:birthday-2-fill' />{user.birthdate}</p>
+                        <p><Icon icon='mdi:email' />{user.email}</p>
                     </div>
                     <div className={styles.btnAdmin}>
                         <div className={styles.options}>
@@ -104,6 +130,18 @@ export default function Me() {
                         <div className={styles.metricsBox}>
                             <p>{user.followers}</p>
                             <p>Followers</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_posts}</p>
+                            <p>Posts</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_likes}</p>
+                            <p>Likes</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_snapshares}</p>
+                            <p>Snapshares</p>
                         </div>
                     </div>
                 </div>

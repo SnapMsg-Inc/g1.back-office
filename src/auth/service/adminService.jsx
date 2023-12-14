@@ -61,3 +61,14 @@ export const UnblockUser = (uid, token) =>
             'Content-Type' : 'application/json',
         }
     })
+    
+export const GetStatsByUid = (uid, time, token) => 
+    axios({
+        method: 'get',
+        url: `${URL}posts/${uid}/stats?start=${time.start}&end=${time.end}`,
+        data: time,
+        headers: {
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'application/json',
+        }
+    })

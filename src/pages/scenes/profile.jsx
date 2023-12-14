@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 import { GetToken, GetUsersByUid } from '../../auth/service/userService'
 import { GetPostByNick } from '../../auth/service/postService'
-import { BlockUser, DeleteRegisterAdmin, RegisterAdmin, UnblockUser } from '../../auth/service/adminService'
+import { BlockUser, DeleteRegisterAdmin, GetStatsByUid, RegisterAdmin, UnblockUser } from '../../auth/service/adminService'
 
 export default function Profile() {
     const { uid } = useParams()
@@ -33,6 +33,7 @@ export default function Profile() {
     const [isAdmin, setIsAdmin] = useState(null)
     const [isBlock, setIsBlock] = useState(false)
     const [error, setError] = useState(false)
+    const [stats, setStats] = useState({})
     // const user = users.find((u) => u.uid === uid)
     
     const handleBack = () => navigate(-1)
@@ -88,6 +89,26 @@ export default function Profile() {
             .catch((error) => {})
         }
 
+        const handleGetStatsPostByUid = () => {
+            setError(false)
+            GetToken()
+            .then(token => {
+                let date = new Date()
+                const end = new Date(date);
+                end.setDate(date.getDate() + 1)
+                GetStatsByUid(user.uid,{
+                    start:'2023-12-01',
+                    end: end.toISOString().split('T')[0]
+                }, token)
+                .then(response => {
+                    console.log('stats', response.data)
+                    setStats(response.data)
+                })
+                .catch(error => console.log('Error in stats profile', error?.response?.status))
+            })
+            .catch(error => console.log('Error in token', error))
+        }
+
         const handleGetPostUserByNick = async () => {
             setError(false)
             GetToken()
@@ -103,11 +124,15 @@ export default function Profile() {
             })
             .catch(error => {})
         }
-        if (isAuthenticated)
+
+        if (isAuthenticated) {
             handleGetUserByUid()
-        if (user.nick)
+        }
+        if (user.nick) {
+            handleGetStatsPostByUid()
             handleGetPostUserByNick()
-    }, [isAuthenticated, uid, user.nick])
+        }
+    }, [isAuthenticated, uid, user.nick, user.uid])
 
     return (
         <div className={styles.container}>
@@ -135,8 +160,8 @@ export default function Profile() {
                     </div>
                     <div className={styles.btnAdmin}>
                         <div className={styles.options}>
-                            <p>Block</p>
-                            <Icon className={ user.is_blocked ? styles.blocked: styles.notBlocked } 
+                            <p>{isBlock ? 'Block' : 'No block'}</p>
+                            <Icon className={ isBlock ? styles.blocked: styles.notBlocked } 
                                 icon="bx:block" 
                                 onClick={handleBlockUser}/>
                         </div>
@@ -160,6 +185,18 @@ export default function Profile() {
                         <div className={styles.metricsBox}>
                             <p>{user.followers}</p>
                             <p>Followers</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_posts}</p>
+                            <p>Posts</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_likes}</p>
+                            <p>Likes</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_snapshares}</p>
+                            <p>Snapshares</p>
                         </div>
                     </div>
                 </div>
