@@ -46,11 +46,9 @@ export default function Me() {
         const handleGetPostUserByNick = async () => {
             GetToken()
             .then(token => {
-                console.log('desde posts ',user.nick)
                 GetPostByNick(token, user.nick)
                 .then(response => {
                     setPosts(response.data)
-                    console.log(response.data)
                 })
                 .catch(error => 
                     console.log(error.response.status)

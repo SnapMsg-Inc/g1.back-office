@@ -61,7 +61,6 @@ export default function Post() {
                 setIsLoadingTrending(false)
             })
         }
-        console.log(post)
         if (isAuthenticated)
             handleTrendings()
     }, [isAuthenticated, post])

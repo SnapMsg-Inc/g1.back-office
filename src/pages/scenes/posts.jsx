@@ -38,7 +38,6 @@ export default function Posts() {
                 GetPosts(token, page)
                 .then(response => {
                     setPosts(response.data)
-                    console.log(response.data)
                 })
                 .catch(error => {
                     console.error('Error GetPosts in Posts Scene ',error.response)
