@@ -115,9 +115,39 @@
     align-items: center;
     justify-content: center;
     align-content: center;
-    font-size: 3vw;
+    font-size: 2vw;
 }
 
 .icon {
     padding:3%;
+}
+
+.error {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.error p {
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+}
+
+.iconError {
+    color: white;
+    font-size: 4vw;
+}
+
+.containerLoading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
 }

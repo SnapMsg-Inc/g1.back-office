@@ -2,20 +2,68 @@ import { Icon } from '@iconify/react'
 import styles from '../../styles/pages/post.module.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import HashtagText from '../../utils/hashtags'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { GetToken } from '../../auth/service/userService'
+import { BlockPost, UnblockPost } from '../../auth/service/adminService'
+import { GetTrendingsPost } from '../../auth/service/postService'
+import { Spinner } from 'react-activity'
+import { AuthenticationContext } from '../../auth/context/authenticationContext'
 
 export default function Post() {
     const navigate = useNavigate()
     const locationData = useLocation()
-    const { user, post, trendings } = locationData.state
+    const { user, post } = locationData.state
+    const { isAuthenticated } = useContext(AuthenticationContext)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    
+    const [isBlock, setIsBlock] = useState(post.post ? post.post.is_blocked : post.is_blocked)
+    const [trendings, setTrendings] = useState([])
+    const [loadingTrending, setIsLoadingTrending] = useState(false)
+
     const handleBack = () => navigate(-1)
-    console.log(locationData.state)
 
     const handleModal = () => {
         setIsModalOpen(!isModalOpen)
     }
+
+    const handleBlockPost = async () => {
+        await GetToken()
+        .then(async token => {
+            if (!isBlock) {
+                await BlockPost(token, post.post ? post.post.pid : post.pid)
+                .then(response => console.log('Block Post ', response.status))
+                .catch(error => console.error('Error in block post ', error.response.status))
+            } else {
+                await UnblockPost(token, post.post ? post.post.pid : post.pid)    
+                .then(response => console.log('Unblock Post ', response.status))
+                .catch(error => console.error('Error in Unblock post ', error.response.status))
+            }
+        })
+        setIsBlock(!isBlock)
+    }
+
+    useEffect(() => {
+        const handleTrendings = () => {
+            setIsLoadingTrending(true)
+            GetToken()
+            .then(token => {
+                GetTrendingsPost(token)
+                .then(response => {
+                    setTrendings(response.data)
+                    setIsLoadingTrending(false)
+                })
+                .catch(error => {
+                    console.log(error?.response?.status)
+                    setIsLoadingTrending(false)
+                })
+            })
+            .catch(error => {
+                console.log(error)
+                setIsLoadingTrending(false)
+            })
+        }
+        if (isAuthenticated)
+            handleTrendings()
+    }, [isAuthenticated, post])
 
     return (
         <div className={styles.container}>
@@ -41,6 +89,12 @@ export default function Post() {
                     <p>Post</p>
                 </div>
                 <div className={styles.post}>
+                    {post.post &&
+                        <div className={styles.snapShare} >
+                            <Icon icon="la:retweet"/>
+                            <p>This Snap was Snapshare</p>
+                        </div> 
+                    }
                     <div className={styles.header}>
                         <div className={styles.imgProfile}>
                             <img src={user.pic} alt={user.alias}/>
@@ -50,13 +104,18 @@ export default function Post() {
                             <p>@{user.nick}</p>
                             <span>{post.timestamp.slice(0,10)}</span>
                         </div>
+                        <div className={styles.blockPost}>
+                            <Icon   className={isBlock ? styles.iconBlock : styles.iconNoBlock } 
+                                icon={isBlock ? "mdi:message-off" : "mdi:message"}
+                                onClick={handleBlockPost}/>
+                        </div>
                     </div>
                     <div className={styles.body}>
                         <div className={styles.textPost}>
-                            <HashtagText text={post.text} isLink={true}/>
+                            <HashtagText text={post.post ? post.post.text : post.text} isLink={true}/>
                         </div>
                         {
-                            post.media_uri.length > 0 ? 
+                            ('post' in post ? post.post.media_uri.lenght > 0 : post.media_uri.length > 0) ? 
                             <div className={styles.mediaUri} onClick={() => handleModal()}>
                                 <img src={post.media_uri[0]} alt={user.alias}/> 
                             </div>
@@ -64,10 +123,10 @@ export default function Post() {
                              <></>
                         }
                         <div className={styles.statistics}>
-                            <p>0</p>
+                            <p>{post.post ? post.post.snapshares: post.snapshares}</p>
                             <Icon className={styles.iconStats} 
                                 icon="la:retweet"/>
-                            <p>{post.likes}</p>
+                            <p>{post.post ? post.post.snapshares:post.likes}</p>
                             <Icon className={styles.iconStats}
                                 icon="icon-park-solid:like"/>
                         </div>
@@ -79,14 +138,20 @@ export default function Post() {
                     <p>Trendings</p>
                 </div>
                 <div className={styles.trendingsInfo}>
+                    {loadingTrending ? 
+                    <div className={styles.containerLoading}>
+                        <Spinner className={styles.loading}/>
+                    </div>
+                    :
                     <div className={styles.trendingsItem}>
                         {trendings.map((item, index) => (
-                        <>
+                        <div key={index}>
                             <p>{`${index + 1}. `}<span>{`${item.topic}`}</span></p>
-                            <p>{`Mentions ${item.mention_count}`}</p>
-                        </>
+                            <p>{`Mentions: ${item.mention_count}`}</p>
+                        </div>
                         ))}
                     </div>
+                    }      
                 </div>
             </div>
         </div>

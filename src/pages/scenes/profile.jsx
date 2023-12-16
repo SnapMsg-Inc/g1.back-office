@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthenticationContext } from '../../auth/context/authenticationContext'
 import { GetToken, GetUsersByUid } from '../../auth/service/userService'
 import { GetPostByNick } from '../../auth/service/postService'
+import { BlockUser, DeleteRegisterAdmin, GetStatsByUid, RegisterAdmin, UnblockUser } from '../../auth/service/adminService'
 
 export default function Profile() {
     const { uid } = useParams()
@@ -13,55 +14,125 @@ export default function Profile() {
     const [user, setUser] = useState({
         "uid": "",
         "alias": "",
+        "fullname": "",
+        "interests": [],
+        "zone": {"latitude": 0,
+                "longitude": 0},
+        "is_admin": false,
+        "is_blocked": false,
+        "ocupation": null,
+        "pic": "",
+        "email": "",
         "nick": "",
+        "birthdate": "",
         "followers": 0,
         "follows": 0,
-        "interests": [],
-        "pic": ''
     })
     const [posts, setPosts] = useState([])
     const navigate = useNavigate()
+    const [isAdmin, setIsAdmin] = useState(null)
+    const [isBlock, setIsBlock] = useState(false)
+    const [error, setError] = useState(false)
+    const [stats, setStats] = useState({})
     // const user = users.find((u) => u.uid === uid)
     
     const handleBack = () => navigate(-1)
-    const handleDeleteUser = () => console.log('User deleted')
-    const handleAdminUser = () => console.log('User is Admin')
+   
+    const handleBlockUser = () => {
+        GetToken()
+        .then(token => {
+            if (!isBlock) {
+                BlockUser(user.uid, token)
+                .then(response => console.log('Block User', response?.status))
+                .catch(error => console.log('Error in Block User: ', error?.response))
+            } else {
+                UnblockUser(user.uid, token)
+                .then(response => console.log('Unblock User', response?.status))
+                .catch(error => console.log('Error in Unblock User: ', error?.response))
+            }
+        })
+        setIsBlock(!isBlock)
+    }
+
+    const handleAdminUser = () => {
+        GetToken()
+        .then(token => {
+            if (!isAdmin) {
+                RegisterAdmin(token, user.uid)
+                .then(response => console.log('Register Admin ', response.status))
+                .catch(error => console.error('Error Register Admin ', error.response.status))
+            } else {
+                DeleteRegisterAdmin(token, user.uid)
+                .then(response => console.log('Delete Register Admin ', response.status))
+                .catch(error => console.error('Error Delete Register Admin ', error.response.status))
+            }
+        })
+        setIsAdmin(!isAdmin)
+    }
 
     useEffect(() => {
         const handleGetUserByUid = async () => {
+            setError(false)
             GetToken()
             .then((token) => {
                 GetUsersByUid(token, uid)
-                .then(response => 
-                    setUser(response.data[0])    
-                )
-                .catch(error =>
-                    console.log(error.response.status)
-                )
+                .then(response => {
+                    setUser(response.data)
+                    setIsBlock(response.data.is_blocked)  
+                    setIsAdmin(response.data.is_admin)  
+                })
+                .catch(error => {
+                    console.error(error.response.status)
+                    setError(true)
+                })
             })
             .catch((error) => {})
         }
 
-        const handleGetPostUserByNick = async () => {
+        const handleGetStatsPostByUid = () => {
+            setError(false)
             GetToken()
             .then(token => {
-                console.log('desde posts ',user.nick)
+                let date = new Date()
+                const end = new Date(date);
+                end.setDate(date.getDate() + 1)
+                GetStatsByUid(user.uid,{
+                    start:'2023-12-01',
+                    end: end.toISOString().split('T')[0]
+                }, token)
+                .then(response => {
+                    console.log('stats', response.data)
+                    setStats(response.data)
+                })
+                .catch(error => console.log('Error in stats profile', error?.response?.status))
+            })
+            .catch(error => console.log('Error in token', error))
+        }
+
+        const handleGetPostUserByNick = async () => {
+            setError(false)
+            GetToken()
+            .then(token => {
                 GetPostByNick(token, user.nick)
                 .then(response => {
                     setPosts(response.data)
-                    console.log(response.data)
                 })
-                .catch(error => 
-                    console.log(error.response.status)
-                )
+                .catch(error => {
+                    console.error(error.response.status)
+                    setError(true)
+                })
             })
             .catch(error => {})
         }
-        if (isAuthenticated)
+
+        if (isAuthenticated) {
             handleGetUserByUid()
-        if (user.nick)
+        }
+        if (user.nick) {
+            handleGetStatsPostByUid()
             handleGetPostUserByNick()
-    }, [isAuthenticated, uid, user.nick])
+        }
+    }, [isAuthenticated, uid, user.nick, user.uid])
 
     return (
         <div className={styles.container}>
@@ -79,18 +150,26 @@ export default function Profile() {
                 </div>
                 <div className={styles.containerInfo}>
                     <div className={styles.textInfo}>
-                        <h3>{user.alias}</h3>
+                        <h3>
+                            {user.alias}
+                        </h3>
                         <p className={styles.textNick}>@{user.nick}</p>
                         <p>{user.interests.join(', ')}</p>
+                        <p><Icon icon='mingcute:birthday-2-fill' />{user.birthdate}</p>
+                        <p><Icon icon='mdi:email' />{user.email}</p>
                     </div>
                     <div className={styles.btnAdmin}>
-                        <Icon className={styles.icon}
-                                icon="mdi:trash-can"
-                                onClick={() => handleDeleteUser()}/>
-                        <button className={styles.btnNoAdmin}
-                            onClick={() => handleAdminUser()}>
-                            Admin
-                        </button>
+                        <div className={styles.options}>
+                            <p>{isBlock ? 'Block' : 'No block'}</p>
+                            <Icon className={ isBlock ? styles.blocked: styles.notBlocked } 
+                                icon="bx:block" 
+                                onClick={handleBlockUser}/>
+                        </div>
+                        <div className={styles.options}>
+                            <p>{isAdmin ? 'Admin' : 'No Admin'}</p>
+                            <Icon className={ isAdmin ? styles.isAdmin : styles.NotAdmin } 
+                                icon="eos-icons:admin-outlined" onClick={handleAdminUser}/>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.metrics}>
@@ -107,6 +186,18 @@ export default function Profile() {
                             <p>{user.followers}</p>
                             <p>Followers</p>
                         </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_posts}</p>
+                            <p>Posts</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_likes}</p>
+                            <p>Likes</p>
+                        </div>
+                        <div className={styles.metricsBox}>
+                            <p>{stats.total_snapshares}</p>
+                            <p>Snapshares</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,11 +211,18 @@ export default function Profile() {
                             <p>Post not found</p> 
                         </div>
                         :
+                        error ?
+                            <div className={styles.error}>
+                                <Icon icon="bx:error" className={styles.iconError}/>
+                                <p>An error has ocurred.</p>
+                                <p>Please try again later</p>
+                            </div>
+                        :
                         <ul className={styles.posts}>
                             {posts.map((post) => (
                                 <PostCard key={post.pid} 
-                                post={post}
-                                user={user}/>
+                                    post={post}
+                                    user={user}/>
                             ))}
                         </ul>
                     }

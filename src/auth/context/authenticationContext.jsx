@@ -43,18 +43,14 @@ export const AuthenticationContextProvider = ({children}) => {
         setPermission(false)
         LoginAccount(email, password)
         .then((userCredential) => {
-            console.log('Inicie sesion')
             GetToken()
             .then((token) => {
                 GetMe(token)
                 .then((response) => {
-                    console.log(response.data)
-                    // if (response.data.email !== "example@example.com") {
                     if (response.data.is_admin !== true) {
                         alert('Permission denied')
                         onLogout()
                     } else {
-                        console.log(token)
                         dispatchSignedIn({type:"SIGN_IN", payload: "signed_in"})
                         setPermission(true)
                         handleNavigate('/users')
@@ -62,8 +58,12 @@ export const AuthenticationContextProvider = ({children}) => {
                     setIsLoading(false)
                 })
                 .catch((error) => {
-                    console.log(error.response)
-                    if (error.response.status === 502){
+                    // if (error.code) {
+                        //     alert('Error undefined')
+                        //     return
+                        // }
+                    console.log('Error in Login', error)
+                    if (error?.response?.status === 502){
                         alert('Services not available.\nPlease retry again later')
                         onLogout()
                     }    
@@ -85,13 +85,10 @@ export const AuthenticationContextProvider = ({children}) => {
         setPermission(false)
         LoginFederate(credential)
         .then((userCredential) => {
-            const { uid } = userCredential.user
-            console.log(uid)
             GetToken()
             .then((token) => {
                 GetMe(token)
                 .then((response) => {
-                    console.log(response.data)
                     if (response.data.is_admin !== true) {
                         alert('Permission denied')
                         onLogout()
@@ -103,7 +100,7 @@ export const AuthenticationContextProvider = ({children}) => {
                     setIsLoading(false)
                 })
                 .catch((error) => {
-                    if (error.response.status === 502){
+                    if (error?.response?.status === 502){
                         alert('Services not available.\nPlease retry again later')
                         onLogout()
                     }    

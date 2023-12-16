@@ -2,9 +2,10 @@ import axios from "axios";
 import { getIdToken } from "firebase/auth";
 import { auth } from "../firebase";
 
-const URL = 'https://api-gateway-marioax.cloud.okteto.net/users'
+const URL = 'https://gateway-api-api-gateway-marioax.cloud.okteto.net/users'
+const URL_GET = 'https://gateway-api-api-gateway-marioax.cloud.okteto.net/admin/users'
 
-export const GetToken = async () => await getIdToken(auth.currentUser, false)
+export const GetToken = () => getIdToken(auth?.currentUser, false)
 
 export const GetMe = async (token) =>
     await axios.get(
@@ -30,7 +31,7 @@ export const GetUsers = async (token, page) =>
         
 export const GetUsersByUid = async (token, uid) =>
     await axios.get(
-        `${URL}?uid=${uid}&limit=1&page=0`,
+        `${URL_GET}/${uid}`,
         {
             headers: {
                 'Authorization' : `Bearer ${token}`,

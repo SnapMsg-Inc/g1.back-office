@@ -25,7 +25,6 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         onLogin(formData.email, formData.password, (path) => navigate(path))
-        console.log(`email: ${formData.email} password: ${formData.password}`)
     }
 
     const handleForgot = () => setOpenDialog(!openDialog) 
@@ -87,7 +86,6 @@ export default function Login() {
                     <div className={styles.federate} >
                         <GoogleLogin onSuccess={
                             (response) => {
-                                console.log(response)
                                 onLoginFederate(response.credential,
                                                 (path) => navigate(path))
                             }
